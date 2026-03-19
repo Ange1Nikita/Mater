@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>МастерПро — Мастер на час в Краснодаре</title>
+  <meta name="description" content="Мастер на час в Краснодаре — электрика, сантехника, навеска, мелкий ремонт. Выезд за 60 минут, фиксированные цены, гарантия 1 год. Звоните: +7 (918) 975-16-42" />
+  <meta name="theme-color" content="#f7f6f3" />
+  <link rel="canonical" href="https://masterpro.ru/" />
+
+  <!-- OG -->
+  <meta property="og:title" content="МастерПро — Мастер на час в Краснодаре" />
+  <meta property="og:description" content="Электрика, сантехника, навеска, мелкий ремонт. Выезд за 60 минут, фиксированные цены." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+
+  <!-- Preconnect + fonts with display=swap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- GLOBAL BACKGROUND -->
+  <div class="global-bg" aria-hidden="true">
+    <div class="global-bg__grid"></div>
+    <div class="global-bg__blob global-bg__blob--1"></div>
+    <div class="global-bg__blob global-bg__blob--2"></div>
+    <div class="global-bg__blob global-bg__blob--3"></div>
+    <div class="global-bg__blob global-bg__blob--4"></div>
+    <div class="global-bg__blob global-bg__blob--5"></div>
+    <div class="global-bg__blob global-bg__blob--6"></div>
+    <canvas id="bg-canvas"></canvas>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero" role="banner">
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="/" class="logo" aria-label="МастерПро">
+        <div class="logo__mark" aria-hidden="true">🔧</div>
+        <span class="logo__name">Мастер<span>Про</span></span>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#portfolio">Портфолио</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="prices.html">Цены</a></li>
+      </ul>
+      <a href="tel:+79189751642" class="nav__phone" aria-label="Позвонить">
+        📞 <span>+7 (918) 975-16-42</span>
+      </a>
+      <button class="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <div class="cards-float" aria-hidden="true">
+      <div class="glass-card card-order">
+        <div class="card-order__label">
+          <span class="card-order__label-dot"></span>
+          Мастер в пути
+        </div>
+        <div class="card-order__master">
+          <div class="card-order__ava">👷</div>
+          <div>
+            <div class="card-order__name">Алексей М.</div>
+            <div class="card-order__spec">Мастер-универсал</div>
+          </div>
+        </div>
+        <div class="card-order__eta">
+          <span class="card-order__eta-text">⏱ Приедет через</span>
+          <span class="card-order__eta-val">42 мин</span>
+        </div>
+      </div>
+      <div class="glass-card card-review">
+        <div class="card-review__stars">⭐⭐⭐⭐⭐</div>
+        <p class="card-review__quote">"Приехали быстро, сделали аккуратно. Цена — точно по смете. Рекомендую!"</p>
+        <div class="card-review__author">
+          <div class="card-review__ava">👩</div>
+          <div>
+            <div class="card-review__aname">Марина Л.</div>
+            <div class="card-review__time">2 дня назад</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card card-guarantee">
+        <div class="card-guarantee__icon">🛡️</div>
+        <div class="card-guarantee__title">Гарантия 1 год</div>
+        <div class="card-guarantee__text">На все виды работ — письменная гарантия</div>
+      </div>
+    </div>
+
+    <main class="hero__body">
+      <div class="badge" role="note">
+        <span class="badge__pill">
+          <span class="badge__dot" aria-hidden="true"></span>
+          Онлайн
+        </span>
+        Работаем 24/7 · Краснодар · Приедем за 60 минут
+      </div>
+      <h1 class="hero__title">
+        Мастер дома —<br>
+        <span class="grad">без ожиданий,</span><br>
+        <span class="italic">без лишних слов</span>
+      </h1>
+      <p class="hero__sub">
+        Электрика, сантехника, навеска, мелкий ремонт.<br>
+        <strong>Фиксированная цена</strong> — никаких скрытых доплат.<br>
+        Оставьте заявку — мастер приедет сегодня.
+      </p>
+      <div class="hero__cta">
+        <a href="#cta" class="btn-main">Вызвать мастера <span class="btn-main__arrow" aria-hidden="true">→</span></a>
+        <a href="#services" class="btn-ghost">Наши услуги</a>
+      </div>
+    </main>
+
+    <div class="trust-strip" aria-label="Ключевые показатели">
+      <div class="trust-item">
+        <span class="trust-item__val">8<span class="accent">400+</span></span>
+        <span class="trust-item__label">выполненных заявок</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__val">4.<span class="accent">9</span>/5</span>
+        <span class="trust-item__label">средний рейтинг</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__val"><span class="accent">60</span> мин</span>
+        <span class="trust-item__label">среднее ожидание</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__val"><span class="accent">1</span> год</span>
+        <span class="trust-item__label">гарантия на работы</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-item__val"><span class="accent">24</span>/7</span>
+        <span class="trust-item__label">приём заявок</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Услуги</span>
+        <h2 class="section-title">Что мы <span class="grad">умеем</span></h2>
+        <p class="section-desc">Полный спектр бытовых услуг от проверенных мастеров</p>
+      </div>
+      <div class="services__grid">
+        <article class="service-card reveal" data-service="plumbing">
+          <div class="service-card__icon-wrap"><span>🔧</span></div>
+          <h3 class="service-card__title">Сантехника</h3>
+          <p class="service-card__desc">Установка и ремонт смесителей, унитазов, устранение протечек, замена труб</p>
+          <span class="service-card__price">от 1 500 ₽</span>
+          <span class="service-card__more">Подробнее →</span>
+        </article>
+        <article class="service-card reveal" data-service="electric">
+          <div class="service-card__icon-wrap"><span>💡</span></div>
+          <h3 class="service-card__title">Электрика</h3>
+          <p class="service-card__desc">Замена розеток, выключателей, подключение люстр и бытовой техники</p>
+          <span class="service-card__price">от 1 200 ₽</span>
+          <span class="service-card__more">Подробнее →</span>
+        </article>
+        <article class="service-card reveal" data-service="mounting">
+          <div class="service-card__icon-wrap"><span>🖼️</span></div>
+          <h3 class="service-card__title">Навеска и монтаж</h3>
+          <p class="service-card__desc">Карнизы, полки, телевизоры, зеркала — надежно и ровно</p>
+          <span class="service-card__price">от 800 ₽</span>
+          <span class="service-card__more">Подробнее →</span>
+        </article>
+        <article class="service-card reveal" data-service="doors">
+          <div class="service-card__icon-wrap"><span>🚪</span></div>
+          <h3 class="service-card__title">Двери и замки</h3>
+          <p class="service-card__desc">Установка и ремонт дверей, замена замков, регулировка фурнитуры</p>
+          <span class="service-card__price">от 2 500 ₽</span>
+          <span class="service-card__more">Подробнее →</span>
+        </article>
+        <article class="service-card reveal" data-service="repair">
+          <div class="service-card__icon-wrap"><span>🏠</span></div>
+          <h3 class="service-card__title">Мелкий ремонт</h3>
+          <p class="service-card__desc">Любые бытовые задачи: от починки до установки — одним визитом</p>
+          <span class="service-card__price">от 1 000 ₽</span>
+          <span class="service-card__more">Подробнее →</span>
+        </article>
+      </div>
+
+      <div style="text-align:center;margin-top:40px">
+        <a href="prices.html" class="btn-ghost">📋 Полный прайс-лист</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section why-us" id="why-us">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Преимущества</span>
+        <h2 class="section-title">Почему выбирают <span class="grad">нас</span></h2>
+      </div>
+      <div class="why-us__grid">
+        <div class="advantage reveal"><div class="advantage__number">01</div><h3 class="advantage__title">Проверенные мастера</h3><p class="advantage__desc">Каждый специалист проходит отбор, проверку документов и тестовое задание</p></div>
+        <div class="advantage reveal"><div class="advantage__number">02</div><h3 class="advantage__title">Фиксированные цены</h3><p class="advantage__desc">Вы знаете стоимость до начала работ. Никаких скрытых доплат</p></div>
+        <div class="advantage reveal"><div class="advantage__number">03</div><h3 class="advantage__title">Гарантия качества</h3><p class="advantage__desc">Даем гарантию 1 год на все выполненные работы. Если что-то не так — исправим бесплатно</p></div>
+        <div class="advantage reveal"><div class="advantage__number">04</div><h3 class="advantage__title">Быстрый выезд</h3><p class="advantage__desc">Мастер приедет в течение часа или в удобное для вас время</p></div>
+        <div class="advantage reveal"><div class="advantage__number">05</div><h3 class="advantage__title">Чистота после работы</h3><p class="advantage__desc">Уберем за собой весь мусор. Вы получите результат, а не хаос</p></div>
+        <div class="advantage reveal"><div class="advantage__number">06</div><h3 class="advantage__title">Работаем без выходных</h3><p class="advantage__desc">Доступны 7 дней в неделю с 8:00 до 22:00 без перерывов</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="section how" id="how">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Процесс</span>
+        <h2 class="section-title">Как мы <span class="grad">работаем</span></h2>
+      </div>
+      <div class="how__steps">
+        <div class="step reveal"><div class="step__number">1</div><div class="step__content"><h3 class="step__title">Оставьте заявку</h3><p class="step__desc">Заполните форму на сайте или позвоните. Опишите задачу — мы подберем мастера</p></div></div>
+        <div class="step reveal"><div class="step__number">2</div><div class="step__content"><h3 class="step__title">Согласование</h3><p class="step__desc">Мастер свяжется с вами, уточнит детали и назовет точную стоимость</p></div></div>
+        <div class="step reveal"><div class="step__number">3</div><div class="step__content"><h3 class="step__title">Выполнение работ</h3><p class="step__desc">Мастер приедет в назначенное время со всем необходимым инструментом</p></div></div>
+        <div class="step reveal"><div class="step__number">4</div><div class="step__content"><h3 class="step__title">Приемка и оплата</h3><p class="step__desc">Вы проверяете работу, оплачиваете удобным способом и получаете гарантию</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="section portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Портфолио</span>
+        <h2 class="section-title">Примеры <span class="grad">работ</span></h2>
+        <p class="section-desc">Фотографии реальных проектов наших мастеров</p>
+      </div>
+      <div class="portfolio__grid">
+        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Ремонт электрики</span></div></div>
+        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Ремонт ванной</span></div></div>
+        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Установка дверей</span></div></div>
+        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Монтаж освещения</span></div></div>
+        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Навеска полок</span></div></div>
+        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Замена сантехники</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section reviews" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Отзывы</span>
+        <h2 class="section-title">Что говорят <span class="grad">клиенты</span></h2>
+      </div>
+      <div class="reviews__grid">
+        <article class="review-card reveal">
+          <div class="review-card__stars">⭐⭐⭐⭐⭐</div>
+          <p class="review-card__text">"Вызывали мастера на замену смесителя и установку полок. Приехал вовремя, сделал быстро и аккуратно. Рекомендую!"</p>
+          <div class="review-card__author"><div class="review-card__avatar">А</div><div><div class="review-card__name">Анна Петрова</div><div class="review-card__date">2 недели назад</div></div></div>
+        </article>
+        <article class="review-card reveal">
+          <div class="review-card__stars">⭐⭐⭐⭐⭐</div>
+          <p class="review-card__text">"Протекал кран на кухне уже месяц. Мастер приехал через 40 минут, заменил картридж за 15 минут. Цена как и обещали."</p>
+          <div class="review-card__author"><div class="review-card__avatar">Д</div><div><div class="review-card__name">Дмитрий Козлов</div><div class="review-card__date">1 месяц назад</div></div></div>
+        </article>
+        <article class="review-card reveal">
+          <div class="review-card__stars">⭐⭐⭐⭐⭐</div>
+          <p class="review-card__text">"Заказывали установку 5 розеток и перенос выключателя. Все сделали за пару часов, убрали за собой. Уже третий раз обращаемся."</p>
+          <div class="review-card__author"><div class="review-card__avatar">М</div><div><div class="review-card__name">Мария Соколова</div><div class="review-card__date">3 недели назад</div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Вопросы</span>
+        <h2 class="section-title">Частые <span class="grad">вопросы</span></h2>
+      </div>
+      <div class="faq__list">
+        <div class="faq-item reveal"><button class="faq-item__question">Как быстро приедет мастер?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>В среднем мастер приезжает в течение 30–60 минут после подтверждения заявки. Вы также можете выбрать удобную дату и время визита.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-item__question">Сколько стоит вызов мастера?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Вызов мастера бесплатный. Вы оплачиваете только выполненные работы по фиксированному прайсу.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-item__question">Есть ли гарантия на работы?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Да, мы даем гарантию 1 год на все виды работ. Если возникнет проблема — устраним бесплатно.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-item__question">Какие способы оплаты принимаете?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Наличные, банковская карта, перевод по номеру телефона (СБП). Оплата после выполнения и приемки работ.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-item__question">Мастер привезет материалы?<span class="faq-item__icon">+</span></button><div class="faq-item__answer"><p>Мастер приезжает с полным набором инструментов. Расходные материалы можно приобрести через нас или подготовить самостоятельно.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta" id="cta">
+    <div class="container">
+      <div class="cta__inner">
+        <div class="cta__blob" aria-hidden="true"></div>
+        <div class="cta__text">
+          <span class="section-tag">Заявка</span>
+          <h2 class="section-title" style="text-align:left">Готовы решить<br>бытовую <span class="grad">задачу?</span></h2>
+          <p class="cta__desc">Оставьте заявку — мастер свяжется с вами в течение 15 минут</p>
+          <div class="cta__features">
+            <div class="cta__feature">✓ Бесплатный выезд</div>
+            <div class="cta__feature">✓ Фиксированная цена</div>
+            <div class="cta__feature">✓ Гарантия 1 год</div>
+          </div>
+        </div>
+        <form class="form" id="orderForm">
+          <div class="form__group"><input type="text" name="name" class="form__input" placeholder="Ваше имя" required autocomplete="name"></div>
+          <div class="form__group"><input type="tel" name="phone" class="form__input" placeholder="Телефон" required autocomplete="tel"></div>
+          <div class="form__group">
+            <select name="service" class="form__input form__select" required>
+              <option value="" disabled selected>Выберите услугу</option>
+              <option value="plumbing">Сантехника</option>
+              <option value="electric">Электрика</option>
+              <option value="mounting">Навеска и монтаж</option>
+              <option value="doors">Двери и замки</option>
+              <option value="other">Другое</option>
+            </select>
+          </div>
+          <div class="form__group"><textarea name="comment" class="form__input form__textarea" placeholder="Опишите задачу" rows="3"></textarea></div>
+          <button type="submit" class="btn-main btn-main--full">Отправить заявку <span class="btn-main__arrow" aria-hidden="true">→</span></button>
+          <p class="form__note">Нажимая кнопку, вы соглашаетесь с обработкой персональных данных</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="logo"><div class="logo__mark" aria-hidden="true">🔧</div><span class="logo__name">Мастер<span>Про</span></span></a>
+        <p class="footer__copy">© 2026 МастерПро. Все права защищены.</p>
+      </div>
+      <nav class="footer__links" aria-label="Ссылки">
+        <a href="#services">Услуги</a>
+        <a href="#why-us">Почему мы</a>
+        <a href="#how">Как работаем</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="footer__contacts">
+        <a href="tel:+79189751642">+7 (918) 975-16-42</a>
+        <p>Ежедневно 8:00 — 22:00</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Service Detail Modal -->
+  <div class="service-modal" id="serviceModal">
+    <div class="service-modal__backdrop"></div>
+    <div class="service-modal__content">
+      <button class="service-modal__close" aria-label="Закрыть">✕</button>
+      <div class="service-modal__header">
+        <div class="service-modal__icon" id="modalIcon"></div>
+        <div>
+          <h3 class="service-modal__title" id="modalTitle"></h3>
+          <p class="service-modal__subtitle" id="modalSubtitle"></p>
+        </div>
+      </div>
+      <div class="service-modal__prices" id="modalPrices"></div>
+      <div class="service-modal__note">* Цены средние по Краснодару. Точную стоимость мастер назовёт после осмотра.</div>
+      <button type="button" class="btn-main btn-main--full service-modal__cta">Оставить заявку <span class="btn-main__arrow" aria-hidden="true">→</span></button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu__close" aria-label="Закрыть меню">✕</button>
+    <div class="mobile-menu__inner">
+      <a href="#services" class="mobile-menu__link">Услуги</a>
+      <a href="#portfolio" class="mobile-menu__link">Портфолио</a>
+      <a href="#reviews" class="mobile-menu__link">Отзывы</a>
+      <a href="#faq" class="mobile-menu__link">FAQ</a>
+      <a href="prices.html" class="mobile-menu__link">Цены</a>
+      <a href="#cta" class="btn-main" style="margin-top:20px">Вызвать мастера →</a>
+    </div>
+  </div>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "МастерПро",
+    "description": "Мастер на час в Краснодаре — электрика, сантехника, навеска, мелкий ремонт",
+    "telephone": "+79189751642",
+    "address": {"@type": "PostalAddress", "addressLocality": "Краснодар", "addressCountry": "RU"},
+    "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "8400"},
+    "openingHours": "Mo-Su 08:00-22:00"
+  }
+  </script>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

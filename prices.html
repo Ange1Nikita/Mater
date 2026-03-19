@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Цены на услуги — МастерПро, Краснодар</title>
+  <meta name="description" content="Прайс-лист на услуги мастера на час в Краснодаре. Сантехника, электрика, навеска, двери, мелкий ремонт. Фиксированные цены." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- GLOBAL BACKGROUND -->
+  <div class="global-bg" aria-hidden="true">
+    <div class="global-bg__grid"></div>
+    <div class="global-bg__blob global-bg__blob--1"></div>
+    <div class="global-bg__blob global-bg__blob--2"></div>
+    <div class="global-bg__blob global-bg__blob--3"></div>
+    <canvas id="bg-canvas"></canvas>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav scrolled" aria-label="Навигация">
+    <a href="index.html" class="logo" aria-label="МастерПро">
+      <div class="logo__mark" aria-hidden="true">🔧</div>
+      <span class="logo__name">Мастер<span>Про</span></span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="index.html#services">Услуги</a></li>
+      <li><a href="index.html#reviews">Отзывы</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+    </ul>
+    <a href="tel:+79189751642" class="nav__phone" aria-label="Позвонить">
+      📞 <span>+7 (918) 975-16-42</span>
+    </a>
+    <button class="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- PRICES PAGE -->
+  <div class="prices-page">
+    <div class="container">
+
+      <div class="prices-page__header">
+        <a href="index.html" class="prices-page__back">← На главную</a>
+        <span class="section-tag">Прайс-лист</span>
+        <h1 class="section-title">Цены на <span class="grad">услуги</span></h1>
+        <p class="section-desc">Средние цены по Краснодару. Точную стоимость мастер назовёт после осмотра.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="price-tabs">
+        <button class="price-tab active" data-tab="plumbing">🔧 Сантехника</button>
+        <button class="price-tab" data-tab="electric">💡 Электрика</button>
+        <button class="price-tab" data-tab="mounting">🖼️ Навеска</button>
+        <button class="price-tab" data-tab="doors">🚪 Двери</button>
+        <button class="price-tab" data-tab="repair">🏠 Ремонт</button>
+        <button class="price-tab" data-tab="all">📋 Все услуги</button>
+      </div>
+
+      <!-- Price tables -->
+      <div class="price-sections" id="priceSections"></div>
+
+      <!-- CTA -->
+      <div class="prices-page__cta">
+        <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Нужен мастер?</h2>
+        <p style="color:var(--text-2);margin:8px 0 24px">Оставьте заявку — перезвоним за 15 минут</p>
+        <a href="index.html#cta" class="btn-main">Оставить заявку <span class="btn-main__arrow">→</span></a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="logo"><div class="logo__mark" aria-hidden="true">🔧</div><span class="logo__name">Мастер<span>Про</span></span></a>
+        <p class="footer__copy">© 2026 МастерПро. Все права защищены.</p>
+      </div>
+      <nav class="footer__links" aria-label="Ссылки">
+        <a href="index.html">Главная</a>
+        <a href="index.html#services">Услуги</a>
+        <a href="index.html#reviews">Отзывы</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <div class="footer__contacts">
+        <a href="tel:+79189751642">+7 (918) 975-16-42</a>
+        <p>Ежедневно 8:00 — 22:00</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu__close" aria-label="Закрыть меню">✕</button>
+    <div class="mobile-menu__inner">
+      <a href="index.html" class="mobile-menu__link">Главная</a>
+      <a href="index.html#services" class="mobile-menu__link">Услуги</a>
+      <a href="index.html#portfolio" class="mobile-menu__link">Портфолио</a>
+      <a href="index.html#reviews" class="mobile-menu__link">Отзывы</a>
+      <a href="index.html#faq" class="mobile-menu__link">FAQ</a>
+      <a href="prices.html" class="mobile-menu__link">Цены</a>
+      <a href="index.html#cta" class="btn-main" style="margin-top:20px">Вызвать мастера →</a>
+    </div>
+  </div>
+
+  <script>
+  /* Price data */
+  var SERVICES = {
+    plumbing: { icon:'🔧', title:'Сантехника', prices:[
+      ['Установка смесителя','1 500 – 2 500 ₽'],['Замена смесителя с демонтажом','2 000 – 3 000 ₽'],
+      ['Установка унитаза','2 500 – 4 000 ₽'],['Замена сифона раковины/ванны','800 – 1 500 ₽'],
+      ['Устранение засора (тросом)','1 500 – 3 000 ₽'],['Устранение протечки трубы','1 500 – 4 000 ₽'],
+      ['Замена гибкой подводки','500 – 1 000 ₽'],['Установка стиральной машины','1 500 – 2 500 ₽'],
+      ['Установка посудомоечной машины','2 000 – 3 000 ₽'],['Замена полотенцесушителя','3 000 – 5 000 ₽'],
+      ['Установка водонагревателя','3 000 – 5 000 ₽'],['Замена шарового крана','1 000 – 2 000 ₽'],
+      ['Замена гофры унитаза','800 – 1 500 ₽'],['Герметизация ванны/душевой','1 000 – 2 000 ₽']
+    ]},
+    electric: { icon:'💡', title:'Электрика', prices:[
+      ['Замена розетки / выключателя','300 – 600 ₽'],['Установка новой розетки (штробление)','1 200 – 2 500 ₽'],
+      ['Подключение люстры / светильника','800 – 1 500 ₽'],['Установка точечных светильников (шт.)','400 – 800 ₽'],
+      ['Замена автомата в щитке','500 – 1 000 ₽'],['Установка УЗО / дифавтомата','800 – 1 500 ₽'],
+      ['Подключение варочной панели','1 500 – 2 500 ₽'],['Подключение духового шкафа','1 200 – 2 000 ₽'],
+      ['Установка дверного звонка','500 – 1 000 ₽'],['Прокладка кабеля (за метр)','150 – 400 ₽'],
+      ['Установка выключателя с диммером','600 – 1 200 ₽'],['Перенос розетки / выключателя','1 500 – 3 000 ₽'],
+      ['Диагностика электропроводки','1 000 – 2 000 ₽']
+    ]},
+    mounting: { icon:'🖼️', title:'Навеска и монтаж', prices:[
+      ['Навеска полки (одна)','500 – 1 000 ₽'],['Установка карниза','800 – 1 500 ₽'],
+      ['Навеска телевизора на стену','1 500 – 2 500 ₽'],['Навеска зеркала','800 – 1 500 ₽'],
+      ['Установка рейлинга на кухню','600 – 1 200 ₽'],['Навеска картины / фоторамки','300 – 600 ₽'],
+      ['Установка вешалки в прихожую','500 – 1 000 ₽'],['Монтаж настенного шкафчика','800 – 1 500 ₽'],
+      ['Установка сушилки для белья','800 – 1 500 ₽'],['Установка жалюзи / рулонных штор','600 – 1 200 ₽'],
+      ['Монтаж полотенцедержателя','400 – 800 ₽'],['Установка зеркального шкафчика','1 000 – 2 000 ₽']
+    ]},
+    doors: { icon:'🚪', title:'Двери и замки', prices:[
+      ['Установка межкомнатной двери','2 500 – 4 500 ₽'],['Установка дверной коробки','2 000 – 3 500 ₽'],
+      ['Замена дверного замка','800 – 2 000 ₽'],['Врезка замка в новую дверь','1 200 – 2 500 ₽'],
+      ['Установка дверной ручки','300 – 700 ₽'],['Установка доводчика двери','1 000 – 2 000 ₽'],
+      ['Регулировка двери','500 – 1 200 ₽'],['Установка наличников (комплект)','800 – 1 500 ₽'],
+      ['Установка порога','500 – 1 000 ₽'],['Замена петель (пара)','500 – 1 000 ₽'],
+      ['Установка глазка','300 – 600 ₽'],['Ремонт дверной коробки','1 500 – 3 000 ₽']
+    ]},
+    repair: { icon:'🏠', title:'Мелкий ремонт', prices:[
+      ['Сборка/разборка мебели (шкаф)','2 000 – 4 000 ₽'],['Сборка кровати','1 500 – 3 000 ₽'],
+      ['Сборка комода / тумбы','800 – 1 500 ₽'],['Сборка стеллажа','1 000 – 2 000 ₽'],
+      ['Ремонт мебельных петель','300 – 600 ₽'],['Подрезка двери','800 – 1 500 ₽'],
+      ['Укладка плинтуса (за метр)','150 – 350 ₽'],['Заделка отверстий в стене','300 – 800 ₽'],
+      ['Мелкий ремонт плитки','800 – 2 000 ₽'],['Замена ручки / фурнитуры (шт.)','200 – 500 ₽'],
+      ['Установка москитной сетки','500 – 1 000 ₽'],['Мастер на час (1 час работы)','1 000 – 1 800 ₽']
+    ]}
+  };
+
+  function renderSection(key, d) {
+    var rows = '';
+    for (var i = 0; i < d.prices.length; i++) {
+      rows += '<div class="price-row"><span class="price-row__name">' + d.prices[i][0] + '</span><span class="price-row__val">' + d.prices[i][1] + '</span></div>';
+    }
+    return '<div class="price-section" data-section="' + key + '">' +
+      '<div class="price-section__header"><span class="price-section__icon">' + d.icon + '</span>' +
+      '<div><h2 class="price-section__title">' + d.title + '</h2></div></div>' +
+      '<div class="price-section__rows">' + rows + '</div></div>';
+  }
+
+  function showTab(tab) {
+    var container = document.getElementById('priceSections');
+    var html = '';
+    if (tab === 'all') {
+      var keys = Object.keys(SERVICES);
+      for (var i = 0; i < keys.length; i++) html += renderSection(keys[i], SERVICES[keys[i]]);
+    } else {
+      html = renderSection(tab, SERVICES[tab]);
+    }
+    container.innerHTML = html;
+
+    // Update active tab
+    var tabs = document.querySelectorAll('.price-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].classList.toggle('active', tabs[i].getAttribute('data-tab') === tab);
+    }
+  }
+
+  // Tab clicks
+  document.querySelector('.price-tabs').addEventListener('click', function(e) {
+    var tab = e.target.closest('.price-tab');
+    if (tab) showTab(tab.getAttribute('data-tab'));
+  });
+
+  // Initial render
+  showTab('all');
+
+  // Burger
+  var burger = document.querySelector('.burger');
+  var menu = document.getElementById('mobileMenu');
+  function closeMenu() {
+    burger.classList.remove('open');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  if (burger && menu) {
+    burger.addEventListener('click', function() {
+      burger.classList.toggle('open');
+      menu.classList.toggle('open');
+      document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    });
+    var closeBtn = menu.querySelector('.mobile-menu__close');
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    menu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', closeMenu);
+    });
+  }
+
+  // Nav scroll
+  var nav = document.querySelector('.nav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+  </script>
+
+  <!-- Canvas (reuse light version) -->
+  <script>
+  (function(){
+    var c=document.getElementById('bg-canvas');if(!c)return;
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    var x=c.getContext('2d'),W,H,pts=[],
+    C=[[75,124,243],[139,92,246],[245,158,11]];
+    function mk(){var co=C[(Math.random()*3)|0];return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:1+Math.random()*2,a:.18+Math.random()*.22,c:co}}
+    function rs(){W=c.width=innerWidth;H=c.height=innerHeight;pts=Array.from({length:Math.min(35,(W*H/30000)|0)},mk)}
+    function dr(){x.clearRect(0,0,W,H);
+      for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0}
+      x.lineWidth=.8;for(var i=0;i<pts.length;i++)for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=dx*dx+dy*dy;if(d<16900){var a=(1-Math.sqrt(d)/130)*.12,r=pts[i].c;x.beginPath();x.moveTo(pts[i].x,pts[i].y);x.lineTo(pts[j].x,pts[j].y);x.strokeStyle='rgba('+r[0]+','+r[1]+','+r[2]+','+a+')';x.stroke()}}
+      for(var i=0;i<pts.length;i++){var p=pts[i],r=p.c;x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fillStyle='rgba('+r[0]+','+r[1]+','+r[2]+','+p.a+')';x.fill()}
+      requestAnimationFrame(dr)}
+    var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(function(){rs();dr()},150)},{passive:true});
+    rs();dr()
+  })();
+  </script>
+</body>
+</html>

@@ -645,6 +645,8 @@
     document.getElementById('popupOrderForm').addEventListener('submit', function(e) {
       e.preventDefault();
       var data = Object.fromEntries(new FormData(this));
+      data.service = 'other';
+      data.comment = 'Заявка из всплывающего окна';
       fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

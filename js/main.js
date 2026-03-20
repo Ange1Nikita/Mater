@@ -452,45 +452,46 @@ document.addEventListener('DOMContentLoaded', () => {
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
     svg.setAttribute('preserveAspectRatio', 'none');
 
-    var line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    line.setAttribute('d', d);
-    line.setAttribute('class', 'elec-line');
-    svg.appendChild(line);
     el.appendChild(svg);
 
-    // Вторая молния — бежит навстречу
-    var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    line2.setAttribute('d', d);
-    line2.setAttribute('class', 'elec-line');
-    line2.style.opacity = '0.5';
-    svg.appendChild(line2);
+    // Рандомно 1 или 2 молнии
+    var count = Math.random() > 0.5 ? 2 : 1;
+
+    var lines = [];
+    for (var li = 0; li < count; li++) {
+      var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', d);
+      p.setAttribute('class', 'elec-line');
+      if (li === 1) p.style.opacity = '0.5';
+      svg.appendChild(p);
+      lines.push(p);
+    }
 
     requestAnimationFrame(function() {
-      var len = line.getTotalLength();
-      var spark = len * 0.08;
+      var len = lines[0].getTotalLength();
 
-      // Молния 1 — по часовой
-      line.style.strokeDasharray = spark + ' ' + (len - spark);
-      var a1 = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-      a1.setAttribute('attributeName', 'stroke-dashoffset');
-      a1.setAttribute('from', len + '');
-      a1.setAttribute('to', '0');
-      a1.setAttribute('dur', '4s');
-      a1.setAttribute('repeatCount', 'indefinite');
-      a1.setAttribute('calcMode', 'linear');
-      line.appendChild(a1);
+      for (var li = 0; li < lines.length; li++) {
+        var spark = len * (li === 0 ? 0.08 : 0.06);
+        lines[li].style.strokeDasharray = spark + ' ' + (len - spark);
 
-      // Молния 2 — против часовой, сдвинута, чуть медленнее
-      var spark2 = len * 0.06;
-      line2.style.strokeDasharray = spark2 + ' ' + (len - spark2);
-      var a2 = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-      a2.setAttribute('attributeName', 'stroke-dashoffset');
-      a2.setAttribute('from', '0');
-      a2.setAttribute('to', len + '');
-      a2.setAttribute('dur', '5s');
-      a2.setAttribute('repeatCount', 'indefinite');
-      a2.setAttribute('calcMode', 'linear');
-      line2.appendChild(a2);
+        // Разная скорость и направление
+        var dur = li === 0 ? '4s' : '5.5s';
+        var fromVal = li === 0 ? len : 0;
+        var toVal = li === 0 ? 0 : len;
+
+        // Рандомный начальный сдвиг — каждая молния стартует в своём месте
+        var startOffset = Math.round(len * (0.2 + Math.random() * 0.6));
+        lines[li].style.strokeDashoffset = startOffset + 'px';
+
+        var a = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+        a.setAttribute('attributeName', 'stroke-dashoffset');
+        a.setAttribute('from', fromVal + '');
+        a.setAttribute('to', toVal + '');
+        a.setAttribute('dur', dur);
+        a.setAttribute('repeatCount', 'indefinite');
+        a.setAttribute('calcMode', 'linear');
+        lines[li].appendChild(a);
+      }
     });
   }
 

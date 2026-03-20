@@ -458,21 +458,39 @@ document.addEventListener('DOMContentLoaded', () => {
     svg.appendChild(line);
     el.appendChild(svg);
 
-    // Настраиваем dasharray после вставки
+    // Вторая молния — бежит навстречу
+    var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    line2.setAttribute('d', d);
+    line2.setAttribute('class', 'elec-line');
+    line2.style.opacity = '0.5';
+    svg.appendChild(line2);
+
     requestAnimationFrame(function() {
       var len = line.getTotalLength();
-      var spark = len * 0.1; // искра = 10% периметра
-      line.style.strokeDasharray = spark + ' ' + (len - spark);
+      var spark = len * 0.08;
 
-      // Бесконечная анимация через SMIL (плавнее чем CSS)
-      var anim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-      anim.setAttribute('attributeName', 'stroke-dashoffset');
-      anim.setAttribute('from', len + '');
-      anim.setAttribute('to', '0');
-      anim.setAttribute('dur', '4s'); // медленная скорость
-      anim.setAttribute('repeatCount', 'indefinite');
-      anim.setAttribute('calcMode', 'linear');
-      line.appendChild(anim);
+      // Молния 1 — по часовой
+      line.style.strokeDasharray = spark + ' ' + (len - spark);
+      var a1 = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+      a1.setAttribute('attributeName', 'stroke-dashoffset');
+      a1.setAttribute('from', len + '');
+      a1.setAttribute('to', '0');
+      a1.setAttribute('dur', '4s');
+      a1.setAttribute('repeatCount', 'indefinite');
+      a1.setAttribute('calcMode', 'linear');
+      line.appendChild(a1);
+
+      // Молния 2 — против часовой, сдвинута, чуть медленнее
+      var spark2 = len * 0.06;
+      line2.style.strokeDasharray = spark2 + ' ' + (len - spark2);
+      var a2 = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+      a2.setAttribute('attributeName', 'stroke-dashoffset');
+      a2.setAttribute('from', '0');
+      a2.setAttribute('to', len + '');
+      a2.setAttribute('dur', '5s');
+      a2.setAttribute('repeatCount', 'indefinite');
+      a2.setAttribute('calcMode', 'linear');
+      line2.appendChild(a2);
     });
   }
 

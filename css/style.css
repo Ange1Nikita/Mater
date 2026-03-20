@@ -2562,90 +2562,82 @@ body::after {
 }
 
 /* ================================================================
-   LIGHTNING — электрический разряд бежит по контуру блока
+   LIGHTNING — искра-змейка бежит по контуру блока
 ================================================================ */
 
-.lt-border {
+.lt-spark {
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
   pointer-events: none;
   z-index: 50;
-  overflow: hidden;
   opacity: 0;
-  animation: ltFlash var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
-}
-
-/* Вращающийся conic-gradient — яркое пятно бежит по периметру */
-.lt-border::before {
-  content: '';
-  position: absolute;
-  inset: -40%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    transparent 30%,
-    rgba(139,92,246,0.15) 35%,
-    rgba(168,85,247,0.6) 40%,
-    rgba(200,160,255,0.9) 42%,
-    #fff 43%,
-    rgba(200,160,255,0.9) 44%,
-    rgba(168,85,247,0.6) 46%,
-    rgba(139,92,246,0.15) 51%,
-    transparent 56%,
-    transparent 100%
-  );
-  animation: ltRotate var(--lt-speed, 2s) linear infinite;
-}
-
-/* Маска — показывает только тонкую рамку */
-.lt-border::after {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border-radius: inherit;
-  background: var(--bg, #f7f6f3);
-}
-
-/* Свечение вокруг блока */
-.lt-glow {
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 49;
-  opacity: 0;
-  animation: ltFlash var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
   box-shadow:
-    0 0 15px 2px rgba(139,92,246,0.3),
-    0 0 40px 4px rgba(139,92,246,0.1),
-    inset 0 0 15px 2px rgba(139,92,246,0.15);
+    0 0 4px 2px rgba(168,85,247,0.9),
+    0 0 12px 4px rgba(139,92,246,0.6),
+    0 0 28px 8px rgba(139,92,246,0.3);
+  animation: ltRun var(--lt-speed, 2.5s) linear infinite;
+  animation-delay: var(--lt-delay, 0s);
 }
 
-@keyframes ltRotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+/* Хвост искры */
+.lt-trail {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(168,85,247,0.7);
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  box-shadow:
+    0 0 6px 2px rgba(139,92,246,0.4),
+    0 0 16px 4px rgba(139,92,246,0.15);
+  animation: ltRun var(--lt-speed, 2.5s) linear infinite;
+  animation-delay: calc(var(--lt-delay, 0s) + 0.06s);
 }
 
-@keyframes ltFlash {
-  0%, 85%  { opacity: 0; }
-  88%      { opacity: 1; }
-  96%      { opacity: 1; }
-  100%     { opacity: 0; }
+.lt-trail2 {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(139,92,246,0.4);
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0;
+  box-shadow: 0 0 8px 2px rgba(139,92,246,0.2);
+  animation: ltRun var(--lt-speed, 2.5s) linear infinite;
+  animation-delay: calc(var(--lt-delay, 0s) + 0.12s);
 }
 
-/* Для стеклянных карточек — маска прозрачная */
-.lt-border--glass::after {
-  background: rgba(255,255,255,0.68);
-}
+/*
+  Искра бежит по периметру:
+  0%   → верх-лево
+  25%  → верх-право
+  50%  → низ-право
+  75%  → низ-лево
+  100% → верх-лево
 
-/* Для showcase-row */
-.lt-border--surface::after {
-  background: rgba(255,255,255,0.72);
+  Пауза между пробежками через opacity
+*/
+@keyframes ltRun {
+  0%   { top: 0;             left: 0;             opacity: 0; }
+  2%   { top: 0;             left: 0;             opacity: 1; }
+  25%  { top: 0;             left: calc(100% - 6px); opacity: 1; }
+  26%  { top: 0;             left: calc(100% - 6px); opacity: 1; }
+  50%  { top: calc(100% - 6px); left: calc(100% - 6px); opacity: 1; }
+  51%  { top: calc(100% - 6px); left: calc(100% - 6px); opacity: 1; }
+  75%  { top: calc(100% - 6px); left: 0;             opacity: 1; }
+  76%  { top: calc(100% - 6px); left: 0;             opacity: 0.8; }
+  98%  { top: 0;             left: 0;             opacity: 0.5; }
+  100% { top: 0;             left: 0;             opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lt-border, .lt-glow { display: none; }
+  .lt-spark, .lt-trail, .lt-trail2 { display: none; }
 }
 
 /* ================================================================

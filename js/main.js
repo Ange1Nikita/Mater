@@ -402,40 +402,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 
-/* ========== LIGHTNING — разряд бежит по контуру блоков ========== */
+/* ========== LIGHTNING — искра-змейка по контуру блоков ========== */
 (function() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var configs = [
-    { sel: '.service-card',  dur: 6, speed: 1.8, base: 0,   step: 1.2, bg: 'glass' },
-    { sel: '.step',          dur: 7, speed: 2,   base: 0.8, step: 1.8, bg: 'glass' },
-    { sel: '.review-card',   dur: 8, speed: 1.6, base: 0,   step: 2.7, bg: 'glass' },
-    { sel: '.showcase-row',  dur: 7, speed: 2.2, base: 1,   step: 1.2, bg: 'surface' },
-    { sel: '.advantage',     dur: 9, speed: 2,   base: 0.5, step: 1.5 },
-    { sel: '.faq-item',      dur: 10,speed: 1.8, base: 1.5, step: 2,   bg: 'glass' },
-    { sel: '.glass-card',    dur: 5, speed: 1.5, base: 0.5, step: 1.5, bg: 'glass' },
-    { sel: '.trust-strip',   dur: 6, speed: 2,   base: 2,   step: 0,   bg: 'glass' },
-    { sel: '.cta__inner',    dur: 5, speed: 2.5, base: 0,   step: 0,   bg: 'glass' },
-    { sel: '.map-card',      dur: 8, speed: 2.2, base: 3,   step: 0,   bg: 'glass' },
+    { sel: '.service-card',  speed: 2.5, base: 0,   step: 1.5 },
+    { sel: '.step',          speed: 3,   base: 0.8, step: 2 },
+    { sel: '.review-card',   speed: 2.8, base: 0,   step: 3 },
+    { sel: '.showcase-row',  speed: 3.5, base: 1,   step: 1.5 },
+    { sel: '.advantage',     speed: 2.8, base: 0.5, step: 1.8 },
+    { sel: '.faq-item',      speed: 3,   base: 1.5, step: 2.2 },
+    { sel: '.glass-card',    speed: 2,   base: 0.5, step: 1.5 },
+    { sel: '.trust-strip',   speed: 3,   base: 2,   step: 0 },
+    { sel: '.cta__inner',    speed: 3.5, base: 0,   step: 0 },
+    { sel: '.map-card',      speed: 4,   base: 3,   step: 0 },
   ];
 
-  function addLightning(el, dur, speed, delay, bgType) {
+  function addSpark(el, speed, delay) {
     var pos = getComputedStyle(el).position;
     if (pos === 'static') el.style.position = 'relative';
+    el.style.overflow = el.style.overflow || 'hidden';
 
-    var border = document.createElement('span');
-    border.className = 'lt-border' + (bgType ? ' lt-border--' + bgType : '');
-    border.style.setProperty('--lt-dur', dur + 's');
-    border.style.setProperty('--lt-delay', delay + 's');
-    border.style.setProperty('--lt-speed', speed + 's');
-
-    var glow = document.createElement('span');
-    glow.className = 'lt-glow';
-    glow.style.setProperty('--lt-dur', dur + 's');
-    glow.style.setProperty('--lt-delay', delay + 's');
-
-    el.appendChild(border);
-    el.appendChild(glow);
+    var classes = ['lt-spark', 'lt-trail', 'lt-trail2'];
+    for (var i = 0; i < classes.length; i++) {
+      var s = document.createElement('span');
+      s.className = classes[i];
+      s.style.setProperty('--lt-speed', speed + 's');
+      s.style.setProperty('--lt-delay', delay + 's');
+      el.appendChild(s);
+    }
   }
 
   var obs = new IntersectionObserver(function(entries) {
@@ -443,13 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (entries[i].isIntersecting && !entries[i].target._lt) {
         entries[i].target._lt = true;
         var el = entries[i].target;
-        addLightning(
-          el,
-          parseFloat(el.dataset.ltDur),
-          parseFloat(el.dataset.ltSpeed),
-          parseFloat(el.dataset.ltDelay),
-          el.dataset.ltBg || ''
-        );
+        addSpark(el, parseFloat(el.dataset.ltSpeed), parseFloat(el.dataset.ltDelay));
         obs.unobserve(el);
       }
     }
@@ -459,10 +449,8 @@ document.addEventListener('DOMContentLoaded', () => {
     var cfg = configs[c];
     var els = document.querySelectorAll(cfg.sel);
     for (var i = 0; i < els.length; i++) {
-      els[i].dataset.ltDur = cfg.dur;
       els[i].dataset.ltSpeed = cfg.speed;
       els[i].dataset.ltDelay = cfg.base + cfg.step * i;
-      if (cfg.bg) els[i].dataset.ltBg = cfg.bg;
       obs.observe(els[i]);
     }
   }

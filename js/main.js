@@ -402,11 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 
-/* ========== ELECTRIC EDGE — молния плавно бежит по контуру ========== */
+/* ========== ELECTRIC EDGE — одна молния на блок, рандомный элемент ========== */
 (function() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // SVG defs — градиент + glow
   var defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   defs.style.cssText = 'position:absolute;width:0;height:0';
   defs.innerHTML =
@@ -425,11 +424,17 @@ document.addEventListener('DOMContentLoaded', () => {
     '</defs>';
   document.body.appendChild(defs);
 
-  var selectors = [
-    '.service-card', '.step', '.review-card', '.showcase-row',
-    '.advantage', '.faq-item', '.trust-strip',
-    '.cta__inner', '.map-card'
+  // Группы: каждая группа — один блок, молния на одном элементе за раз
+  var groups = [
+    '.services__grid .service-card',
+    '.how__steps .step',
+    '.reviews__grid .review-card',
+    '.portfolio__showcase .showcase-row',
+    '.why-us__grid .advantage',
+    '.faq__list .faq-item',
   ];
+  // Одиночные элементы — всегда с молнией
+  var singles = ['.trust-strip', '.cta__inner', '.map-card'];
 
   function roundedPath(w, h, r) {
     r = Math.min(r, w / 2, h / 2);
@@ -439,11 +444,12 @@ document.addEventListener('DOMContentLoaded', () => {
       ' L0 '+r+' Q0 0 '+r+' 0Z';
   }
 
-  function setup(el) {
+  function attachSvg(el) {
     el.classList.add('electric');
     if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
 
     var w = el.offsetWidth, h = el.offsetHeight;
+    if (!w || !h) return null;
     var r = parseFloat(getComputedStyle(el).borderRadius) || 0;
     var d = roundedPath(w, h, r);
 
@@ -452,64 +458,78 @@ document.addEventListener('DOMContentLoaded', () => {
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
     svg.setAttribute('preserveAspectRatio', 'none');
 
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    line.setAttribute('d', d);
+    line.setAttribute('class', 'elec-line');
+    svg.appendChild(line);
     el.appendChild(svg);
 
-    // Рандомно 1 или 2 молнии
-    var count = Math.random() > 0.5 ? 2 : 1;
+    var len = line.getTotalLength();
+    var spark = len * 0.08;
+    line.style.strokeDasharray = spark + ' ' + (len - spark);
 
-    var lines = [];
-    for (var li = 0; li < count; li++) {
-      var p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      p.setAttribute('d', d);
-      p.setAttribute('class', 'elec-line');
-      if (li === 1) p.style.opacity = '0.5';
-      svg.appendChild(p);
-      lines.push(p);
-    }
+    var a = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+    a.setAttribute('attributeName', 'stroke-dashoffset');
+    a.setAttribute('from', len + '');
+    a.setAttribute('to', '0');
+    a.setAttribute('dur', '4s');
+    a.setAttribute('repeatCount', 'indefinite');
+    a.setAttribute('calcMode', 'linear');
+    line.appendChild(a);
 
-    requestAnimationFrame(function() {
-      var len = lines[0].getTotalLength();
-
-      for (var li = 0; li < lines.length; li++) {
-        var spark = len * (li === 0 ? 0.08 : 0.06);
-        lines[li].style.strokeDasharray = spark + ' ' + (len - spark);
-
-        // Разная скорость и направление
-        var dur = li === 0 ? '4s' : '5.5s';
-        var fromVal = li === 0 ? len : 0;
-        var toVal = li === 0 ? 0 : len;
-
-        // Рандомный начальный сдвиг — каждая молния стартует в своём месте
-        var startOffset = Math.round(len * (0.2 + Math.random() * 0.6));
-        lines[li].style.strokeDashoffset = startOffset + 'px';
-
-        var a = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-        a.setAttribute('attributeName', 'stroke-dashoffset');
-        a.setAttribute('from', fromVal + '');
-        a.setAttribute('to', toVal + '');
-        a.setAttribute('dur', dur);
-        a.setAttribute('repeatCount', 'indefinite');
-        a.setAttribute('calcMode', 'linear');
-        lines[li].appendChild(a);
-      }
-    });
+    return svg;
   }
 
-  // Инициализация при появлении в viewport
-  var obs = new IntersectionObserver(function(entries) {
-    for (var i = 0; i < entries.length; i++) {
-      if (entries[i].isIntersecting && !entries[i].target._elec) {
-        entries[i].target._elec = true;
-        setup(entries[i].target);
-        obs.unobserve(entries[i].target);
-      }
-    }
-  }, { threshold: 0.05 });
-
-  for (var s = 0; s < selectors.length; s++) {
-    var els = document.querySelectorAll(selectors[s]);
-    for (var i = 0; i < els.length; i++) obs.observe(els[i]);
+  function removeSvg(el) {
+    var svg = el.querySelector('.elec-svg');
+    if (svg) svg.remove();
+    el.classList.remove('electric');
   }
+
+  // Для каждой группы: одна молния, перескакивает на рандомный элемент
+  function initGroup(selector) {
+    var els = document.querySelectorAll(selector);
+    if (!els.length) return;
+
+    var current = null;
+
+    function pick() {
+      // Убираем с текущего
+      if (current) removeSvg(current);
+      // Выбираем рандомный
+      var idx = Math.floor(Math.random() * els.length);
+      current = els[idx];
+      attachSvg(current);
+
+      // Через 6-10 секунд перескочит на другой
+      setTimeout(pick, 6000 + Math.random() * 4000);
+    }
+
+    // Стартуем когда группа видна
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        pick();
+        obs.disconnect();
+      }
+    }, { threshold: 0.05 });
+    obs.observe(els[0]);
+  }
+
+  // Одиночные — просто всегда с молнией
+  function initSingle(selector) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        attachSvg(el);
+        obs.disconnect();
+      }
+    }, { threshold: 0.05 });
+    obs.observe(el);
+  }
+
+  for (var i = 0; i < groups.length; i++) initGroup(groups[i]);
+  for (var i = 0; i < singles.length; i++) initSingle(singles[i]);
 })();
 
 /* ========== TOAST ========== */

@@ -402,63 +402,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 
-/* ========== LIGHTNING — фиолетовая молния по элементам ========== */
+/* ========== LIGHTNING — разряд бежит по контуру блоков ========== */
 (function() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var selectors = [
-    { sel: '.service-card',  dur: 7,  base: 0.5,  step: 1.5 },
-    { sel: '.step',          dur: 9,  base: 1,    step: 2.2 },
-    { sel: '.review-card',   dur: 10, base: 0,    step: 3.3 },
-    { sel: '.showcase-row',  dur: 8,  base: 1.5,  step: 1.5 },
-    { sel: '.advantage',     dur: 11, base: 0.8,  step: 1.8 },
-    { sel: '.faq-item',      dur: 12, base: 2,    step: 2.4 },
-    { sel: '.glass-card',    dur: 6,  base: 1,    step: 2 },
-    { sel: '.trust-strip',   dur: 7,  base: 3,    step: 0 },
-    { sel: '.cta__inner',    dur: 6,  base: 0,    step: 0 },
-    { sel: '.map-card',      dur: 9,  base: 4,    step: 0 },
+  var configs = [
+    { sel: '.service-card',  dur: 6, speed: 1.8, base: 0,   step: 1.2, bg: 'glass' },
+    { sel: '.step',          dur: 7, speed: 2,   base: 0.8, step: 1.8, bg: 'glass' },
+    { sel: '.review-card',   dur: 8, speed: 1.6, base: 0,   step: 2.7, bg: 'glass' },
+    { sel: '.showcase-row',  dur: 7, speed: 2.2, base: 1,   step: 1.2, bg: 'surface' },
+    { sel: '.advantage',     dur: 9, speed: 2,   base: 0.5, step: 1.5 },
+    { sel: '.faq-item',      dur: 10,speed: 1.8, base: 1.5, step: 2,   bg: 'glass' },
+    { sel: '.glass-card',    dur: 5, speed: 1.5, base: 0.5, step: 1.5, bg: 'glass' },
+    { sel: '.trust-strip',   dur: 6, speed: 2,   base: 2,   step: 0,   bg: 'glass' },
+    { sel: '.cta__inner',    dur: 5, speed: 2.5, base: 0,   step: 0,   bg: 'glass' },
+    { sel: '.map-card',      dur: 8, speed: 2.2, base: 3,   step: 0,   bg: 'glass' },
   ];
 
-  function addLightning(el, dur, delay) {
-    // Ensure relative positioning
+  function addLightning(el, dur, speed, delay, bgType) {
     var pos = getComputedStyle(el).position;
     if (pos === 'static') el.style.position = 'relative';
-    el.style.overflow = 'hidden';
+
+    var border = document.createElement('span');
+    border.className = 'lt-border' + (bgType ? ' lt-border--' + bgType : '');
+    border.style.setProperty('--lt-dur', dur + 's');
+    border.style.setProperty('--lt-delay', delay + 's');
+    border.style.setProperty('--lt-speed', speed + 's');
 
     var glow = document.createElement('span');
     glow.className = 'lt-glow';
     glow.style.setProperty('--lt-dur', dur + 's');
     glow.style.setProperty('--lt-delay', delay + 's');
 
-    var edge = document.createElement('span');
-    edge.className = 'lt-edge';
-    edge.style.setProperty('--lt-dur', dur + 's');
-    edge.style.setProperty('--lt-delay', delay + 's');
-
+    el.appendChild(border);
     el.appendChild(glow);
-    el.appendChild(edge);
   }
 
-  var lightObs = new IntersectionObserver(function(entries) {
+  var obs = new IntersectionObserver(function(entries) {
     for (var i = 0; i < entries.length; i++) {
       if (entries[i].isIntersecting && !entries[i].target._lt) {
         entries[i].target._lt = true;
         var el = entries[i].target;
-        var dur = parseFloat(el.getAttribute('data-lt-dur'));
-        var delay = parseFloat(el.getAttribute('data-lt-delay'));
-        addLightning(el, dur, delay);
-        lightObs.unobserve(el);
+        addLightning(
+          el,
+          parseFloat(el.dataset.ltDur),
+          parseFloat(el.dataset.ltSpeed),
+          parseFloat(el.dataset.ltDelay),
+          el.dataset.ltBg || ''
+        );
+        obs.unobserve(el);
       }
     }
   }, { threshold: 0.05 });
 
-  for (var s = 0; s < selectors.length; s++) {
-    var cfg = selectors[s];
+  for (var c = 0; c < configs.length; c++) {
+    var cfg = configs[c];
     var els = document.querySelectorAll(cfg.sel);
     for (var i = 0; i < els.length; i++) {
-      els[i].setAttribute('data-lt-dur', cfg.dur);
-      els[i].setAttribute('data-lt-delay', cfg.base + cfg.step * i);
-      lightObs.observe(els[i]);
+      els[i].dataset.ltDur = cfg.dur;
+      els[i].dataset.ltSpeed = cfg.speed;
+      els[i].dataset.ltDelay = cfg.base + cfg.step * i;
+      if (cfg.bg) els[i].dataset.ltBg = cfg.bg;
+      obs.observe(els[i]);
     }
   }
 })();

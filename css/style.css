@@ -2562,76 +2562,90 @@ body::after {
 }
 
 /* ================================================================
-   LIGHTNING — фиолетовая молния пробегает по элементам
-   Реализация через вставленные JS-ом span-ы, не конфликтует с ::before/::after
+   LIGHTNING — электрический разряд бежит по контуру блока
 ================================================================ */
 
-/* Свечение пробегает по элементу */
-.lt-glow {
+.lt-border {
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 50;
+  overflow: hidden;
+  opacity: 0;
+  animation: ltFlash var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
+}
+
+/* Вращающийся conic-gradient — яркое пятно бежит по периметру */
+.lt-border::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  background: conic-gradient(
+    from 0deg,
     transparent 0%,
-    rgba(139,92,246,0) 20%,
-    rgba(139,92,246,0.12) 30%,
-    rgba(168,85,247,0.35) 45%,
-    rgba(255,255,255,0.55) 50%,
-    rgba(168,85,247,0.35) 55%,
-    rgba(139,92,246,0.12) 70%,
-    rgba(139,92,246,0) 80%,
+    transparent 30%,
+    rgba(139,92,246,0.15) 35%,
+    rgba(168,85,247,0.6) 40%,
+    rgba(200,160,255,0.9) 42%,
+    #fff 43%,
+    rgba(200,160,255,0.9) 44%,
+    rgba(168,85,247,0.6) 46%,
+    rgba(139,92,246,0.15) 51%,
+    transparent 56%,
     transparent 100%
   );
-  z-index: 50;
-  pointer-events: none;
-  filter: blur(2px);
-  animation: ltGlow var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
+  animation: ltRotate var(--lt-speed, 2s) linear infinite;
 }
 
-/* Яркая полоса по верхнему краю */
-.lt-edge {
+/* Маска — показывает только тонкую рамку */
+.lt-border::after {
+  content: '';
   position: absolute;
-  top: 0;
-  left: -80%;
-  width: 35%;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(139,92,246,0.4),
-    rgba(168,85,247,0.9),
-    #fff,
-    rgba(168,85,247,0.9),
-    rgba(139,92,246,0.4),
-    transparent
-  );
-  z-index: 51;
+  inset: 2px;
+  border-radius: inherit;
+  background: var(--bg, #f7f6f3);
+}
+
+/* Свечение вокруг блока */
+.lt-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
   pointer-events: none;
+  z-index: 49;
+  opacity: 0;
+  animation: ltFlash var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
   box-shadow:
-    0 0 8px 3px rgba(139,92,246,0.5),
-    0 0 24px 6px rgba(139,92,246,0.2);
-  animation: ltEdge var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
+    0 0 15px 2px rgba(139,92,246,0.3),
+    0 0 40px 4px rgba(139,92,246,0.1),
+    inset 0 0 15px 2px rgba(139,92,246,0.15);
 }
 
-@keyframes ltGlow {
-  0%, 88%, 100% { left: -100%; opacity: 0; }
-  90%           { opacity: 1; }
-  95%           { left: 150%; opacity: 1; }
-  96%           { opacity: 0; left: 150%; }
+@keyframes ltRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
-@keyframes ltEdge {
-  0%, 89%, 100% { left: -80%; opacity: 0; }
-  90.5%         { opacity: 1; }
-  95.5%         { left: 160%; opacity: 1; }
-  96.5%         { opacity: 0; left: 160%; }
+@keyframes ltFlash {
+  0%, 85%  { opacity: 0; }
+  88%      { opacity: 1; }
+  96%      { opacity: 1; }
+  100%     { opacity: 0; }
+}
+
+/* Для стеклянных карточек — маска прозрачная */
+.lt-border--glass::after {
+  background: rgba(255,255,255,0.68);
+}
+
+/* Для showcase-row */
+.lt-border--surface::after {
+  background: rgba(255,255,255,0.72);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lt-glow, .lt-edge { display: none; }
+  .lt-border, .lt-glow { display: none; }
 }
 
 /* ================================================================

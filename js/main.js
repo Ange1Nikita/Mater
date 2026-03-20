@@ -409,3 +409,77 @@ function showToast(msg, isError) {
   t.className = 'toast show' + (isError ? ' error' : '');
   setTimeout(() => { t.className = 'toast'; }, 4000);
 }
+
+/* ================================================================
+   LIGHTBOX
+================================================================ */
+(function() {
+  var lb = document.getElementById('lightbox');
+  if (!lb) return;
+
+  var img = document.getElementById('lightboxImg');
+  var caption = document.getElementById('lightboxCaption');
+  var items = [];
+  var currentIdx = 0;
+
+  function collectItems() {
+    items = [];
+    document.querySelectorAll('.portfolio__item img, .gallery-grid__item img').forEach(function(el) {
+      items.push({ src: el.src, alt: el.alt });
+    });
+  }
+
+  function open(idx) {
+    collectItems();
+    if (idx < 0 || idx >= items.length) return;
+    currentIdx = idx;
+    img.src = items[idx].src;
+    img.alt = items[idx].alt;
+    caption.textContent = items[idx].alt;
+    lb.classList.add('open');
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
+  }
+
+  function nav(dir) {
+    var next = currentIdx + dir;
+    if (next < 0) next = items.length - 1;
+    if (next >= items.length) next = 0;
+    currentIdx = next;
+    img.src = items[next].src;
+    img.alt = items[next].alt;
+    caption.textContent = items[next].alt;
+  }
+
+  // Click on portfolio/gallery image
+  document.addEventListener('click', function(e) {
+    var item = e.target.closest('.portfolio__item, .gallery-grid__item');
+    if (!item) return;
+    var imgEl = item.querySelector('img');
+    if (!imgEl) return;
+    collectItems();
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].src === imgEl.src) { open(i); break; }
+    }
+  });
+
+  lb.querySelector('.lightbox__close').addEventListener('click', close);
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) close();
+  });
+  lb.querySelector('.lightbox__nav--prev').addEventListener('click', function(e) { e.stopPropagation(); nav(-1); });
+  lb.querySelector('.lightbox__nav--next').addEventListener('click', function(e) { e.stopPropagation(); nav(1); });
+
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') nav(-1);
+    if (e.key === 'ArrowRight') nav(1);
+  });
+})();

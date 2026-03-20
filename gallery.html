@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Фотогалерея — МастерПро, Краснодар</title>
+  <meta name="description" content="Фотографии реальных работ мастера на час в Краснодаре. Сантехника, электрика, навеска, монтаж." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="global-bg" aria-hidden="true">
+    <div class="global-bg__grid"></div>
+    <div class="global-bg__blob global-bg__blob--1"></div>
+    <div class="global-bg__blob global-bg__blob--2"></div>
+    <div class="global-bg__blob global-bg__blob--3"></div>
+    <canvas id="bg-canvas"></canvas>
+  </div>
+
+  <nav class="nav scrolled" aria-label="Навигация">
+    <a href="index.html" class="logo" aria-label="МастерПро">
+      <div class="logo__mark" aria-hidden="true">🔧</div>
+      <span class="logo__name">Мастер<span>Про</span></span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="index.html#services">Услуги</a></li>
+      <li><a href="index.html#reviews">Отзывы</a></li>
+      <li><a href="prices.html">Цены</a></li>
+    </ul>
+    <a href="tel:+79189751642" class="nav__phone" aria-label="Позвонить">
+      📞 <span>+7 (918) 975-16-42</span>
+    </a>
+    <button class="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="gallery-page">
+    <div class="container">
+      <div class="gallery-page__header">
+        <a href="index.html" class="gallery-page__back">← На главную</a>
+        <span class="section-tag">Портфолио</span>
+        <h1 class="section-title">Фото<span class="grad">галерея</span></h1>
+        <p class="section-desc">Реальные работы наших мастеров в Краснодаре</p>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-grid__item"><img src="фото/Установка смесителя для ванной.jpg" alt="Установка смесителя для ванной" loading="lazy"><div class="portfolio__overlay"><span>Установка смесителя для ванной</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Устройство сантехнического шкафа, установка унитаза.jpg" alt="Устройство сантехнического шкафа" loading="lazy"><div class="portfolio__overlay"><span>Сантехнический шкаф, унитаз</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка стеклянной шторки.jpg" alt="Установка стеклянной шторки" loading="lazy"><div class="portfolio__overlay"><span>Установка стеклянной шторки</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка раковины и сифона, установка шкафчика с зеркалом.jpg" alt="Установка раковины и шкафчика" loading="lazy"><div class="portfolio__overlay"><span>Раковина, сифон, шкафчик</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка смесителя.jpg" alt="Установка смесителя" loading="lazy"><div class="portfolio__overlay"><span>Установка смесителя</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Тумба, раковина, смеситель.jpg" alt="Тумба, раковина, смеситель" loading="lazy"><div class="portfolio__overlay"><span>Тумба, раковина, смеситель</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Регулировка механизма слива.jpg" alt="Регулировка механизма слива" loading="lazy"><div class="portfolio__overlay"><span>Регулировка слива</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Ремонт инсталляции.jpg" alt="Ремонт инсталляции" loading="lazy"><div class="portfolio__overlay"><span>Ремонт инсталляции</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Замена сифона на труднодоступном месте.jpg" alt="Замена сифона" loading="lazy"><div class="portfolio__overlay"><span>Замена сифона</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Замена межкомнатного порожка.jpg" alt="Замена порожка" loading="lazy"><div class="portfolio__overlay"><span>Замена межкомнатного порожка</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка зеркала, раковины и тумбы в ванной комнате, подключение коммуникаций.jpg" alt="Установка зеркала и тумбы в ванной" loading="lazy"><div class="portfolio__overlay"><span>Зеркало, тумба, ванная</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка зеркального шкафа.jpg" alt="Установка зеркального шкафа" loading="lazy"><div class="portfolio__overlay"><span>Зеркальный шкаф</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка шкафа ванной комнаты.jpg" alt="Установка шкафа ванной" loading="lazy"><div class="portfolio__overlay"><span>Шкаф ванной комнаты</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Навес зеркал в ванной комнате.jpg" alt="Навес зеркал в ванной" loading="lazy"><div class="portfolio__overlay"><span>Навес зеркал</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Навес зеркала с подсветкой.jpg" alt="Зеркало с подсветкой" loading="lazy"><div class="portfolio__overlay"><span>Зеркало с подсветкой</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Сборка щитка.jpg" alt="Сборка электрощитка" loading="lazy"><div class="portfolio__overlay"><span>Сборка щитка</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Разводка электрики по полу на шумоизоляцию под стяжку.jpg" alt="Разводка электрики" loading="lazy"><div class="portfolio__overlay"><span>Разводка электрики</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Монтаж двух светильников на гипсокартон.jpg" alt="Монтаж светильников" loading="lazy"><div class="portfolio__overlay"><span>Монтаж светильников</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Монтаж люстры.jpg" alt="Монтаж люстры" loading="lazy"><div class="portfolio__overlay"><span>Монтаж люстры</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Освещение.jpg" alt="Освещение" loading="lazy"><div class="portfolio__overlay"><span>Освещение</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Подсветка кухни.jpg" alt="Подсветка кухни" loading="lazy"><div class="portfolio__overlay"><span>Подсветка кухни</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Перенос выключателя света.jpg" alt="Перенос выключателя" loading="lazy"><div class="portfolio__overlay"><span>Перенос выключателя</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Прокладка кабеля и установка электроточек.jpg" alt="Прокладка кабеля" loading="lazy"><div class="portfolio__overlay"><span>Прокладка кабеля</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Работа со стеновыми панелями и освещением.jpg" alt="Стеновые панели и освещение" loading="lazy"><div class="portfolio__overlay"><span>Панели и освещение</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Монтаж розеток и ТВ-крепежа.jpg" alt="Монтаж розеток и ТВ-крепежа" loading="lazy"><div class="portfolio__overlay"><span>Розетки и ТВ-крепёж</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка розеток, освещения, сборка щитка.jpg" alt="Розетки, освещение, щиток" loading="lazy"><div class="portfolio__overlay"><span>Розетки, освещение, щиток</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Электрика под новую кухню.jpg" alt="Электрика под кухню" loading="lazy"><div class="portfolio__overlay"><span>Электрика под кухню</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Электропроводка в кабель-каналах, установка люстр, бра.jpg" alt="Электропроводка" loading="lazy"><div class="portfolio__overlay"><span>Электропроводка, люстры, бра</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Базовый монтаж.jpg" alt="Базовый монтаж" loading="lazy"><div class="portfolio__overlay"><span>Базовый монтаж</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Монтаж телевизора.jpg" alt="Монтаж телевизора" loading="lazy"><div class="portfolio__overlay"><span>Монтаж телевизора</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/43 диагональ на фиксированый прямой кронштейн на гипсокартоновую стену.jpg" alt="ТВ 43 на гипсокартон" loading="lazy"><div class="portfolio__overlay"><span>ТВ 43" на гипсокартон</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/75 диагональ на высоту более 2 метров на поворотный кронштейн.jpg" alt="ТВ 75 поворотный кронштейн" loading="lazy"><div class="portfolio__overlay"><span>ТВ 75" поворотный кронштейн</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/75 диагональ на фиксированый кронштейн стена 10 см.jpg" alt="ТВ 75 фиксированный кронштейн" loading="lazy"><div class="portfolio__overlay"><span>ТВ 75" фиксированный</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/85 диагональ на пазогребннвую стену.jpg" alt="ТВ 85 на стену" loading="lazy"><div class="portfolio__overlay"><span>ТВ 85" на стену</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/8к самсунг 75 диагональ на гипсокартоновую стену.jpg" alt="Samsung 8K 75 на гипсокартон" loading="lazy"><div class="portfolio__overlay"><span>Samsung 8K 75"</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Навеска картин.jpg" alt="Навеска картин" loading="lazy"><div class="portfolio__overlay"><span>Навеска картин</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Навеска предметов интерьера.jpg" alt="Навеска предметов интерьера" loading="lazy"><div class="portfolio__overlay"><span>Предметы интерьера</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Большие картины.jpg" alt="Большие картины" loading="lazy"><div class="portfolio__overlay"><span>Большие картины</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Навес полок.jpg" alt="Навес полок" loading="lazy"><div class="portfolio__overlay"><span>Навес полок</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Навесы в детской.jpg" alt="Навесы в детской" loading="lazy"><div class="portfolio__overlay"><span>Навесы в детской</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка полки.jpg" alt="Установка полки" loading="lazy"><div class="portfolio__overlay"><span>Установка полки</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка карниза.jpg" alt="Установка карниза" loading="lazy"><div class="portfolio__overlay"><span>Установка карниза</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Установка турника.jpg" alt="Установка турника" loading="lazy"><div class="portfolio__overlay"><span>Установка турника</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Галошница.jpg" alt="Галошница" loading="lazy"><div class="portfolio__overlay"><span>Галошница</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Монтаж гардеробной системы.jpg" alt="Монтаж гардеробной системы" loading="lazy"><div class="portfolio__overlay"><span>Гардеробная система</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/Замена центральной балки, усиление дополнительными ножками.jpg" alt="Замена центральной балки" loading="lazy"><div class="portfolio__overlay"><span>Замена балки, усиление</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/стеллаж сборка.jpg" alt="Сборка стеллажа" loading="lazy"><div class="portfolio__overlay"><span>Сборка стеллажа</span></div></div>
+        <div class="gallery-grid__item"><img src="фото/b72c32c344924bde93cc0ae11a938f0a.jpg-profi_w1500.jpg" alt="Работа мастера" loading="lazy"><div class="portfolio__overlay"><span>Работа мастера</span></div></div>
+      </div>
+
+      <div style="text-align:center;padding:60px 0 20px">
+        <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Нужен мастер?</h2>
+        <p style="color:var(--text-2);margin:8px 0 24px">Оставьте заявку — перезвоним за 15 минут</p>
+        <a href="index.html#cta" class="btn-main">Оставить заявку <span class="btn-main__arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="index.html" class="logo"><div class="logo__mark" aria-hidden="true">🔧</div><span class="logo__name">Мастер<span>Про</span></span></a>
+        <p class="footer__copy">© МастерПро. Все права защищены.</p>
+      </div>
+      <nav class="footer__links" aria-label="Ссылки">
+        <a href="index.html">Главная</a>
+        <a href="index.html#services">Услуги</a>
+        <a href="prices.html">Цены</a>
+        <a href="index.html#reviews">Отзывы</a>
+      </nav>
+      <div class="footer__contacts">
+        <a href="tel:+79189751642">+7 (918) 975-16-42</a>
+        <p>Ежедневно 8:00 — 22:00</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" aria-label="Закрыть">✕</button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Назад">‹</button>
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Вперёд">›</button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+    <div class="lightbox__caption" id="lightboxCaption"></div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu__close" aria-label="Закрыть меню">✕</button>
+    <div class="mobile-menu__inner">
+      <a href="index.html" class="mobile-menu__link">Главная</a>
+      <a href="index.html#services" class="mobile-menu__link">Услуги</a>
+      <a href="index.html#portfolio" class="mobile-menu__link">Портфолио</a>
+      <a href="prices.html" class="mobile-menu__link">Цены</a>
+      <a href="index.html#cta" class="btn-main" style="margin-top:20px">Вызвать мастера →</a>
+    </div>
+  </div>
+
+  <script>
+  // Burger
+  var burger=document.querySelector('.burger'),menu=document.getElementById('mobileMenu');
+  function closeMenu(){burger.classList.remove('open');menu.classList.remove('open');document.body.style.overflow=''}
+  if(burger&&menu){
+    burger.addEventListener('click',function(){burger.classList.toggle('open');menu.classList.toggle('open');document.body.style.overflow=menu.classList.contains('open')?'hidden':''});
+    var cb=menu.querySelector('.mobile-menu__close');if(cb)cb.addEventListener('click',closeMenu);
+    menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});
+  }
+
+  // Lightbox
+  (function(){
+    var lb=document.getElementById('lightbox');if(!lb)return;
+    var img=document.getElementById('lightboxImg'),cap=document.getElementById('lightboxCaption'),items=[],idx=0;
+    function collect(){items=[];document.querySelectorAll('.gallery-grid__item img').forEach(function(e){items.push({src:e.src,alt:e.alt})})}
+    function open(i){collect();if(i<0||i>=items.length)return;idx=i;img.src=items[i].src;img.alt=items[i].alt;cap.textContent=items[i].alt;lb.classList.add('open');document.body.classList.add('modal-open');document.documentElement.classList.add('modal-open')}
+    function close(){lb.classList.remove('open');document.body.classList.remove('modal-open');document.documentElement.classList.remove('modal-open')}
+    function nav(d){var n=idx+d;if(n<0)n=items.length-1;if(n>=items.length)n=0;idx=n;img.src=items[n].src;img.alt=items[n].alt;cap.textContent=items[n].alt}
+    document.addEventListener('click',function(e){var it=e.target.closest('.gallery-grid__item');if(!it)return;var im=it.querySelector('img');if(!im)return;collect();for(var i=0;i<items.length;i++){if(items[i].src===im.src){open(i);break}}});
+    lb.querySelector('.lightbox__close').addEventListener('click',close);
+    lb.addEventListener('click',function(e){if(e.target===lb)close()});
+    lb.querySelector('.lightbox__nav--prev').addEventListener('click',function(e){e.stopPropagation();nav(-1)});
+    lb.querySelector('.lightbox__nav--next').addEventListener('click',function(e){e.stopPropagation();nav(1)});
+    document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')nav(-1);if(e.key==='ArrowRight')nav(1)});
+  })();
+  </script>
+
+  <script>
+  (function(){var c=document.getElementById('bg-canvas');if(!c)return;if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;var x=c.getContext('2d'),W,H,pts=[],C=[[75,124,243],[139,92,246],[245,158,11]];function mk(){var co=C[(Math.random()*3)|0];return{x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:1+Math.random()*2,a:.18+Math.random()*.22,c:co}}function rs(){W=c.width=innerWidth;H=c.height=innerHeight;pts=Array.from({length:Math.min(35,(W*H/30000)|0)},mk)}function dr(){x.clearRect(0,0,W,H);for(var i=0;i<pts.length;i++){var p=pts[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0}x.lineWidth=.8;for(var i=0;i<pts.length;i++)for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=dx*dx+dy*dy;if(d<16900){var a=(1-Math.sqrt(d)/130)*.12,r=pts[i].c;x.beginPath();x.moveTo(pts[i].x,pts[i].y);x.lineTo(pts[j].x,pts[j].y);x.strokeStyle='rgba('+r[0]+','+r[1]+','+r[2]+','+a+')';x.stroke()}}for(var i=0;i<pts.length;i++){var p=pts[i],r=p.c;x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fillStyle='rgba('+r[0]+','+r[1]+','+r[2]+','+p.a+')';x.fill()}requestAnimationFrame(dr)}var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(function(){rs();dr()},150)},{passive:true});rs();dr()})();
+  </script>
+</body>
+</html>

@@ -46,6 +46,7 @@
       <ul class="nav__links" role="list">
         <li><a href="#services">Услуги</a></li>
         <li><a href="#portfolio">Портфолио</a></li>
+        <li><a href="gallery.html">Галерея</a></li>
         <li><a href="#reviews">Отзывы</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="prices.html">Цены</a></li>
@@ -238,12 +239,37 @@
         <p class="section-desc">Фотографии реальных проектов наших мастеров</p>
       </div>
       <div class="portfolio__grid">
-        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Ремонт электрики</span></div></div>
-        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Ремонт ванной</span></div></div>
-        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Установка дверей</span></div></div>
-        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Монтаж освещения</span></div></div>
-        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Навеска полок</span></div></div>
-        <div class="portfolio__item reveal"><div class="portfolio__placeholder"><span>Замена сантехники</span></div></div>
+        <div class="portfolio__item portfolio__item--tall reveal">
+          <img src="фото/Установка смесителя для ванной.jpg" alt="Установка смесителя для ванной" loading="lazy">
+          <div class="portfolio__overlay"><span>Установка смесителя</span></div>
+        </div>
+        <div class="portfolio__item reveal">
+          <img src="фото/Сборка щитка.jpg" alt="Сборка щитка" loading="lazy">
+          <div class="portfolio__overlay"><span>Сборка щитка</span></div>
+        </div>
+        <div class="portfolio__item reveal">
+          <img src="фото/Монтаж гардеробной системы.jpg" alt="Монтаж гардеробной системы" loading="lazy">
+          <div class="portfolio__overlay"><span>Монтаж гардеробной системы</span></div>
+        </div>
+        <div class="portfolio__item reveal">
+          <img src="фото/Навес зеркал в ванной комнате.jpg" alt="Навес зеркал в ванной комнате" loading="lazy">
+          <div class="portfolio__overlay"><span>Навес зеркал</span></div>
+        </div>
+        <div class="portfolio__item portfolio__item--tall reveal">
+          <img src="фото/Установка стеклянной шторки.jpg" alt="Установка стеклянной шторки" loading="lazy">
+          <div class="portfolio__overlay"><span>Установка шторки</span></div>
+        </div>
+        <div class="portfolio__item reveal">
+          <img src="фото/75 диагональ на высоту более 2 метров на поворотный кронштейн.jpg" alt="Монтаж ТВ 75 дюймов" loading="lazy">
+          <div class="portfolio__overlay"><span>Монтаж телевизора 75"</span></div>
+        </div>
+        <div class="portfolio__item reveal">
+          <img src="фото/Освещение.jpg" alt="Монтаж освещения" loading="lazy">
+          <div class="portfolio__overlay"><span>Освещение</span></div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px">
+        <a href="gallery.html" class="btn-ghost">📷 Смотреть все работы</a>
       </div>
     </div>
   </section>
@@ -367,6 +393,15 @@
     </div>
   </div>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" aria-label="Закрыть">✕</button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Назад">‹</button>
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Вперёд">›</button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+    <div class="lightbox__caption" id="lightboxCaption"></div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <div class="mobile-menu" id="mobileMenu">
@@ -374,6 +409,7 @@
     <div class="mobile-menu__inner">
       <a href="#services" class="mobile-menu__link">Услуги</a>
       <a href="#portfolio" class="mobile-menu__link">Портфолио</a>
+      <a href="gallery.html" class="mobile-menu__link">Галерея</a>
       <a href="#reviews" class="mobile-menu__link">Отзывы</a>
       <a href="#faq" class="mobile-menu__link">FAQ</a>
       <a href="prices.html" class="mobile-menu__link">Цены</a>

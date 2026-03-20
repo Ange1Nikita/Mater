@@ -717,7 +717,12 @@ body::after {
   bottom: 110px;
   width: 190px;
   opacity: 0;
-  animation: cardSlideLeft 1s var(--ease) 1.3s forwards, cardWobble3 10s ease-in-out 2.5s infinite;
+  animation: cardGuaranteeIn 1s var(--ease) 1.3s forwards, cardWobble3 10s ease-in-out 2.5s infinite;
+}
+
+@keyframes cardGuaranteeIn {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes cardWobble3 {

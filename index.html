@@ -322,7 +322,7 @@
         <span class="section-tag">Отзывы</span>
         <h2 class="section-title">Что говорят <span class="grad">клиенты</span></h2>
       </div>
-      <div class="reviews__grid">
+      <div class="reviews__grid" id="reviewsGrid">
         <article class="review-card reveal">
           <div class="review-card__stars">⭐⭐⭐⭐⭐</div>
           <p class="review-card__text">"Вызывали мастера на замену смесителя и установку полок. Приехал вовремя, сделал быстро и аккуратно. Рекомендую!"</p>
@@ -338,9 +338,41 @@
           <p class="review-card__text">"Заказывали установку 5 розеток и перенос выключателя. Все сделали за пару часов, убрали за собой. Уже третий раз обращаемся."</p>
           <div class="review-card__author"><div class="review-card__avatar">М</div><div><div class="review-card__name">Мария Соколова</div><div class="review-card__date">3 недели назад</div></div></div>
         </article>
+        <!-- Сюда JS добавит отзывы из localStorage -->
+      </div>
+      <div style="text-align:center;margin-top:40px">
+        <button class="btn-ghost" id="openReviewForm">✍ Оставить отзыв</button>
       </div>
     </div>
   </section>
+
+  <!-- Review Form Modal -->
+  <div class="review-modal" id="reviewModal">
+    <div class="review-modal__backdrop"></div>
+    <div class="review-modal__content">
+      <button class="review-modal__close" aria-label="Закрыть">✕</button>
+      <h3 class="review-modal__title">Оставить отзыв</h3>
+      <p class="review-modal__subtitle">Расскажите о вашем опыте работы с нами</p>
+      <form class="review-form" id="reviewForm">
+        <div class="form__group">
+          <input type="text" name="name" class="form__input" placeholder="Ваше имя" required maxlength="50">
+        </div>
+        <div class="form__group">
+          <div class="review-form__stars" id="reviewStars">
+            <span class="review-form__star active" data-val="1">★</span>
+            <span class="review-form__star active" data-val="2">★</span>
+            <span class="review-form__star active" data-val="3">★</span>
+            <span class="review-form__star active" data-val="4">★</span>
+            <span class="review-form__star active" data-val="5">★</span>
+          </div>
+        </div>
+        <div class="form__group">
+          <textarea name="text" class="form__input form__textarea" placeholder="Ваш отзыв" required rows="4" maxlength="500"></textarea>
+        </div>
+        <button type="submit" class="btn-main btn-main--full">Отправить отзыв <span class="btn-main__arrow">→</span></button>
+      </form>
+    </div>
+  </div>
 
   <!-- FAQ -->
   <section class="section faq" id="faq">

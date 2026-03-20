@@ -411,6 +411,139 @@ function showToast(msg, isError) {
 }
 
 /* ================================================================
+   REVIEWS — localStorage
+================================================================ */
+(function() {
+  var grid = document.getElementById('reviewsGrid');
+  var openBtn = document.getElementById('openReviewForm');
+  var modal = document.getElementById('reviewModal');
+  var form = document.getElementById('reviewForm');
+  var starsContainer = document.getElementById('reviewStars');
+  if (!grid || !modal || !form) return;
+
+  var rating = 5;
+
+  // Load saved reviews
+  function loadReviews() {
+    var saved = [];
+    try { saved = JSON.parse(localStorage.getItem('masterpro_reviews') || '[]'); } catch(e) {}
+    // Remove old user reviews from DOM
+    grid.querySelectorAll('.review-card--user').forEach(function(el) { el.remove(); });
+    // Add saved reviews
+    for (var i = 0; i < saved.length; i++) {
+      var r = saved[i];
+      var stars = '';
+      for (var s = 0; s < r.rating; s++) stars += '⭐';
+      var el = document.createElement('article');
+      el.className = 'review-card review-card--user visible';
+      el.innerHTML =
+        '<div class="review-card__new">Новый</div>' +
+        '<div class="review-card__stars">' + stars + '</div>' +
+        '<p class="review-card__text">"' + escapeHtml(r.text) + '"</p>' +
+        '<div class="review-card__author"><div class="review-card__avatar">' + escapeHtml(r.name.charAt(0).toUpperCase()) + '</div><div><div class="review-card__name">' + escapeHtml(r.name) + '</div><div class="review-card__date">' + r.date + '</div></div></div>';
+      grid.appendChild(el);
+    }
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
+    // Reset form
+    form.reset();
+    rating = 5;
+    updateStars(5);
+    // Show form, hide success
+    form.style.display = '';
+    var succ = modal.querySelector('.review-form__success');
+    if (succ) succ.remove();
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
+  }
+
+  function updateStars(val) {
+    rating = val;
+    var stars = starsContainer.querySelectorAll('.review-form__star');
+    for (var i = 0; i < stars.length; i++) {
+      stars[i].classList.toggle('active', (i + 1) <= val);
+    }
+  }
+
+  // Star click
+  starsContainer.addEventListener('click', function(e) {
+    var star = e.target.closest('.review-form__star');
+    if (star) updateStars(parseInt(star.getAttribute('data-val')));
+  });
+
+  // Star hover
+  starsContainer.addEventListener('mouseover', function(e) {
+    var star = e.target.closest('.review-form__star');
+    if (!star) return;
+    var val = parseInt(star.getAttribute('data-val'));
+    var stars = starsContainer.querySelectorAll('.review-form__star');
+    for (var i = 0; i < stars.length; i++) {
+      stars[i].classList.toggle('active', (i + 1) <= val);
+    }
+  });
+
+  starsContainer.addEventListener('mouseleave', function() {
+    updateStars(rating);
+  });
+
+  // Open
+  openBtn.addEventListener('click', openModal);
+
+  // Close
+  modal.querySelector('.review-modal__backdrop').addEventListener('click', closeModal);
+  modal.querySelector('.review-modal__close').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  // Submit
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = form.querySelector('[name="name"]').value.trim();
+    var text = form.querySelector('[name="text"]').value.trim();
+    if (!name || !text) return;
+
+    // Save
+    var saved = [];
+    try { saved = JSON.parse(localStorage.getItem('masterpro_reviews') || '[]'); } catch(e) {}
+
+    var now = new Date();
+    var dateStr = now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    saved.push({ name: name, text: text, rating: rating, date: dateStr });
+    localStorage.setItem('masterpro_reviews', JSON.stringify(saved));
+
+    // Show success
+    form.style.display = 'none';
+    var succ = document.createElement('div');
+    succ.className = 'review-form__success';
+    succ.innerHTML = '<div class="review-form__success-icon">✅</div><div class="review-form__success-title">Спасибо за отзыв!</div><div class="review-form__success-text">Ваш отзыв добавлен на страницу</div>';
+    modal.querySelector('.review-modal__content').appendChild(succ);
+
+    // Reload reviews
+    loadReviews();
+
+    // Auto close after 2s
+    setTimeout(closeModal, 2000);
+  });
+
+  // Init
+  loadReviews();
+})();
+
+/* ================================================================
    LIGHTBOX
 ================================================================ */
 (function() {

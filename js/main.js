@@ -429,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   var selectors = [
     '.service-card', '.step', '.review-card', '.showcase-row',
-    '.advantage', '.faq-item', '.glass-card', '.trust-strip',
+    '.advantage', '.faq-item', '.trust-strip',
     '.cta__inner', '.map-card'
   ];
 

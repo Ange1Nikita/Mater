@@ -2579,7 +2579,7 @@ body::after {
   height: 100%;
   pointer-events: none;
   z-index: 50;
-  overflow: visible;
+  overflow: hidden;
 }
 
 /* Основная линия импульса */

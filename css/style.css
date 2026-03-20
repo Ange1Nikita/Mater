@@ -2562,6 +2562,79 @@ body::after {
 }
 
 /* ================================================================
+   LIGHTNING — фиолетовая молния пробегает по элементам
+   Реализация через вставленные JS-ом span-ы, не конфликтует с ::before/::after
+================================================================ */
+
+/* Свечение пробегает по элементу */
+.lt-glow {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(139,92,246,0) 20%,
+    rgba(139,92,246,0.12) 30%,
+    rgba(168,85,247,0.35) 45%,
+    rgba(255,255,255,0.55) 50%,
+    rgba(168,85,247,0.35) 55%,
+    rgba(139,92,246,0.12) 70%,
+    rgba(139,92,246,0) 80%,
+    transparent 100%
+  );
+  z-index: 50;
+  pointer-events: none;
+  filter: blur(2px);
+  animation: ltGlow var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
+}
+
+/* Яркая полоса по верхнему краю */
+.lt-edge {
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 35%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139,92,246,0.4),
+    rgba(168,85,247,0.9),
+    #fff,
+    rgba(168,85,247,0.9),
+    rgba(139,92,246,0.4),
+    transparent
+  );
+  z-index: 51;
+  pointer-events: none;
+  box-shadow:
+    0 0 8px 3px rgba(139,92,246,0.5),
+    0 0 24px 6px rgba(139,92,246,0.2);
+  animation: ltEdge var(--lt-dur, 8s) var(--lt-delay, 0s) infinite;
+}
+
+@keyframes ltGlow {
+  0%, 88%, 100% { left: -100%; opacity: 0; }
+  90%           { opacity: 1; }
+  95%           { left: 150%; opacity: 1; }
+  96%           { opacity: 0; left: 150%; }
+}
+
+@keyframes ltEdge {
+  0%, 89%, 100% { left: -80%; opacity: 0; }
+  90.5%         { opacity: 1; }
+  95.5%         { left: 160%; opacity: 1; }
+  96.5%         { opacity: 0; left: 160%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-glow, .lt-edge { display: none; }
+}
+
+/* ================================================================
    PERFORMANCE: GPU layers for animated elements
 ================================================================ */
 .global-bg__blob,

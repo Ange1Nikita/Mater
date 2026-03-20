@@ -402,6 +402,67 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 
+/* ========== LIGHTNING — фиолетовая молния по элементам ========== */
+(function() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var selectors = [
+    { sel: '.service-card',  dur: 7,  base: 0.5,  step: 1.5 },
+    { sel: '.step',          dur: 9,  base: 1,    step: 2.2 },
+    { sel: '.review-card',   dur: 10, base: 0,    step: 3.3 },
+    { sel: '.showcase-row',  dur: 8,  base: 1.5,  step: 1.5 },
+    { sel: '.advantage',     dur: 11, base: 0.8,  step: 1.8 },
+    { sel: '.faq-item',      dur: 12, base: 2,    step: 2.4 },
+    { sel: '.glass-card',    dur: 6,  base: 1,    step: 2 },
+    { sel: '.trust-strip',   dur: 7,  base: 3,    step: 0 },
+    { sel: '.cta__inner',    dur: 6,  base: 0,    step: 0 },
+    { sel: '.map-card',      dur: 9,  base: 4,    step: 0 },
+  ];
+
+  function addLightning(el, dur, delay) {
+    // Ensure relative positioning
+    var pos = getComputedStyle(el).position;
+    if (pos === 'static') el.style.position = 'relative';
+    el.style.overflow = 'hidden';
+
+    var glow = document.createElement('span');
+    glow.className = 'lt-glow';
+    glow.style.setProperty('--lt-dur', dur + 's');
+    glow.style.setProperty('--lt-delay', delay + 's');
+
+    var edge = document.createElement('span');
+    edge.className = 'lt-edge';
+    edge.style.setProperty('--lt-dur', dur + 's');
+    edge.style.setProperty('--lt-delay', delay + 's');
+
+    el.appendChild(glow);
+    el.appendChild(edge);
+  }
+
+  var lightObs = new IntersectionObserver(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting && !entries[i].target._lt) {
+        entries[i].target._lt = true;
+        var el = entries[i].target;
+        var dur = parseFloat(el.getAttribute('data-lt-dur'));
+        var delay = parseFloat(el.getAttribute('data-lt-delay'));
+        addLightning(el, dur, delay);
+        lightObs.unobserve(el);
+      }
+    }
+  }, { threshold: 0.05 });
+
+  for (var s = 0; s < selectors.length; s++) {
+    var cfg = selectors[s];
+    var els = document.querySelectorAll(cfg.sel);
+    for (var i = 0; i < els.length; i++) {
+      els[i].setAttribute('data-lt-dur', cfg.dur);
+      els[i].setAttribute('data-lt-delay', cfg.base + cfg.step * i);
+      lightObs.observe(els[i]);
+    }
+  }
+})();
+
 /* ========== TOAST ========== */
 function showToast(msg, isError) {
   const t = document.getElementById('toast');

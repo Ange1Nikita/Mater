@@ -36,28 +36,30 @@
     <canvas id="bg-canvas"></canvas>
   </div>
 
+  <!-- NAV (вне hero чтобы не попадал в stacking context) -->
+  <nav class="nav" aria-label="Основная навигация">
+    <a href="index.html" class="logo" aria-label="МастерПро">
+      <div class="logo__mark" aria-hidden="true">🔧</div>
+      <span class="logo__name">Мастер<span>Про</span></span>
+    </a>
+    <ul class="nav__links" role="list">
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#portfolio">Портфолио</a></li>
+      <li><a href="gallery.html">Галерея</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="prices.html">Цены</a></li>
+    </ul>
+    <a href="tel:+79189751642" class="nav__phone" aria-label="Позвонить">
+      📞 <span>+7 (918) 975-16-42</span>
+    </a>
+    <button class="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
   <!-- HERO -->
   <section class="hero" id="hero" role="banner">
-    <nav class="nav" aria-label="Основная навигация">
-      <a href="/" class="logo" aria-label="МастерПро">
-        <div class="logo__mark" aria-hidden="true">🔧</div>
-        <span class="logo__name">Мастер<span>Про</span></span>
-      </a>
-      <ul class="nav__links" role="list">
-        <li><a href="#services">Услуги</a></li>
-        <li><a href="#portfolio">Портфолио</a></li>
-        <li><a href="gallery.html">Галерея</a></li>
-        <li><a href="#reviews">Отзывы</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="prices.html">Цены</a></li>
-      </ul>
-      <a href="tel:+79189751642" class="nav__phone" aria-label="Позвонить">
-        📞 <span>+7 (918) 975-16-42</span>
-      </a>
-      <button class="burger" aria-label="Меню">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
 
     <div class="cards-float" aria-hidden="true">
       <div class="glass-card card-order">
@@ -238,35 +240,74 @@
         <h2 class="section-title">Примеры <span class="grad">работ</span></h2>
         <p class="section-desc">Фотографии реальных проектов наших мастеров</p>
       </div>
-      <div class="portfolio__grid">
-        <div class="portfolio__item portfolio__item--tall reveal">
-          <img src="фото/Установка смесителя для ванной.jpg" alt="Установка смесителя для ванной" loading="lazy">
-          <div class="portfolio__overlay"><span>Установка смесителя</span></div>
+      <div class="portfolio__showcase">
+
+        <div class="showcase-row reveal">
+          <div class="showcase-row__img">
+            <img src="фото/Установка смесителя для ванной.jpg" alt="Установка смесителя для ванной" loading="lazy">
+          </div>
+          <div class="showcase-row__info">
+            <span class="showcase-row__tag showcase-row__tag--plumbing">Сантехника</span>
+            <h3 class="showcase-row__title">Установка смесителя для ванной</h3>
+            <p class="showcase-row__desc">Монтаж нового смесителя с подключением горячей и холодной воды, замена гибких подводок, проверка герметичности всех соединений.</p>
+          </div>
         </div>
-        <div class="portfolio__item reveal">
-          <img src="фото/Сборка щитка.jpg" alt="Сборка щитка" loading="lazy">
-          <div class="portfolio__overlay"><span>Сборка щитка</span></div>
+
+        <div class="showcase-row showcase-row--reverse reveal">
+          <div class="showcase-row__img">
+            <img src="фото/Сборка щитка.jpg" alt="Сборка электрощитка" loading="lazy">
+          </div>
+          <div class="showcase-row__info">
+            <span class="showcase-row__tag showcase-row__tag--electric">Электрика</span>
+            <h3 class="showcase-row__title">Сборка электрощитка</h3>
+            <p class="showcase-row__desc">Полная сборка электрического щитка: установка автоматов, УЗО, дифавтоматов, маркировка всех линий, подключение и проверка.</p>
+          </div>
         </div>
-        <div class="portfolio__item reveal">
-          <img src="фото/Монтаж гардеробной системы.jpg" alt="Монтаж гардеробной системы" loading="lazy">
-          <div class="portfolio__overlay"><span>Монтаж гардеробной системы</span></div>
+
+        <div class="showcase-row reveal">
+          <div class="showcase-row__img">
+            <img src="фото/Монтаж гардеробной системы.jpg" alt="Монтаж гардеробной системы" loading="lazy">
+          </div>
+          <div class="showcase-row__info">
+            <span class="showcase-row__tag showcase-row__tag--repair">Ремонт</span>
+            <h3 class="showcase-row__title">Монтаж гардеробной системы</h3>
+            <p class="showcase-row__desc">Полный монтаж гардеробной: направляющие, полки, штанги для одежды, корзины. Всё по уровню, аккуратно и надёжно.</p>
+          </div>
         </div>
-        <div class="portfolio__item reveal">
-          <img src="фото/Навес зеркал в ванной комнате.jpg" alt="Навес зеркал в ванной комнате" loading="lazy">
-          <div class="portfolio__overlay"><span>Навес зеркал</span></div>
+
+        <div class="showcase-row showcase-row--reverse reveal">
+          <div class="showcase-row__img">
+            <img src="фото/75 диагональ на высоту более 2 метров на поворотный кронштейн.jpg" alt="Монтаж ТВ 75 дюймов" loading="lazy">
+          </div>
+          <div class="showcase-row__info">
+            <span class="showcase-row__tag showcase-row__tag--mounting">Навеска</span>
+            <h3 class="showcase-row__title">Монтаж ТВ 75" на поворотном кронштейне</h3>
+            <p class="showcase-row__desc">Установка телевизора 75 дюймов на высоте более 2 метров на поворотный кронштейн. Скрытая прокладка кабелей, выравнивание по уровню.</p>
+          </div>
         </div>
-        <div class="portfolio__item portfolio__item--tall reveal">
-          <img src="фото/Установка стеклянной шторки.jpg" alt="Установка стеклянной шторки" loading="lazy">
-          <div class="portfolio__overlay"><span>Установка шторки</span></div>
+
+        <div class="showcase-row reveal">
+          <div class="showcase-row__img">
+            <img src="фото/Навес зеркал в ванной комнате.jpg" alt="Навес зеркал в ванной комнате" loading="lazy">
+          </div>
+          <div class="showcase-row__info">
+            <span class="showcase-row__tag showcase-row__tag--mounting">Навеска</span>
+            <h3 class="showcase-row__title">Навес зеркал в ванной</h3>
+            <p class="showcase-row__desc">Установка двух зеркал на плитку ванной комнаты с использованием специального крепежа. Точная разметка, идеальная симметрия.</p>
+          </div>
         </div>
-        <div class="portfolio__item reveal">
-          <img src="фото/75 диагональ на высоту более 2 метров на поворотный кронштейн.jpg" alt="Монтаж ТВ 75 дюймов" loading="lazy">
-          <div class="portfolio__overlay"><span>Монтаж телевизора 75"</span></div>
+
+        <div class="showcase-row showcase-row--reverse reveal">
+          <div class="showcase-row__img">
+            <img src="фото/Освещение.jpg" alt="Комплексный монтаж освещения" loading="lazy">
+          </div>
+          <div class="showcase-row__info">
+            <span class="showcase-row__tag showcase-row__tag--electric">Электрика</span>
+            <h3 class="showcase-row__title">Комплексное освещение</h3>
+            <p class="showcase-row__desc">Монтаж осветительных приборов по всей квартире: потолочные, настенные, точечные светильники. Подключение к выключателям и диммерам.</p>
+          </div>
         </div>
-        <div class="portfolio__item reveal">
-          <img src="фото/Освещение.jpg" alt="Монтаж освещения" loading="lazy">
-          <div class="portfolio__overlay"><span>Освещение</span></div>
-        </div>
+
       </div>
       <div style="text-align:center;margin-top:40px">
         <a href="gallery.html" class="btn-ghost">📷 Смотреть все работы</a>

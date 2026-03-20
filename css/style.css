@@ -2562,16 +2562,13 @@ body::after {
 }
 
 /* ================================================================
-   ELECTRIC EDGE — высоковольтный импульс по контуру блока
-   Два режима: .electric (subtle) и .electric--intense (cinematic)
-   Управляется JS: рандомные вспышки, не бесконечная анимация
+   ELECTRIC EDGE — плавная молния бежит по контуру блока
 ================================================================ */
 
 .electric {
   position: relative;
 }
 
-/* SVG-контур для анимации */
 .elec-svg {
   position: absolute;
   inset: 0;
@@ -2582,82 +2579,14 @@ body::after {
   overflow: hidden;
 }
 
-/* Основная линия импульса */
+/* Молния — бесконечно бежит по контуру */
 .elec-line {
   fill: none;
   stroke: url(#elecGrad);
   stroke-width: 2;
   stroke-linecap: round;
-  stroke-dasharray: 60 1000;
-  stroke-dashoffset: 1060;
-  opacity: 0;
   filter: url(#elecGlow);
-}
-
-/* Анимация пробега — dashoffset управляется JS */
-.elec-line.fire {
-  opacity: 1;
-  transition: stroke-dashoffset 0.8s ease-out, opacity 0.3s ease-out 0.6s;
-  stroke-dashoffset: var(--elec-end, -200) !important;
-}
-
-/* Fallback: после transition вернуть opacity */
-.elec-line.fire {
-  animation: elecFade 1s ease-out forwards;
-}
-
-@keyframes elecFade {
-  0%, 50% { opacity: 1; }
-  100%    { opacity: 0; }
-}
-
-/* Вспышка всей рамки */
-.elec-flash {
-  fill: none;
-  stroke: rgba(168,85,247,0.15);
-  stroke-width: 1.5;
-  opacity: 0;
-}
-
-.elec-flash.fire {
-  animation: elecFlashPulse 0.4s ease-out forwards;
-}
-
-@keyframes elecFlashPulse {
-  0%   { opacity: 0; stroke: rgba(168,85,247,0.4); stroke-width: 3; }
-  30%  { opacity: 1; stroke: rgba(168,85,247,0.3); }
-  100% { opacity: 0; stroke: rgba(168,85,247,0); stroke-width: 1; }
-}
-
-/* Hover — усиленный режим */
-.electric:hover .elec-flash {
-  opacity: 0.12;
-  stroke: rgba(139,92,246,0.2);
-  stroke-width: 1.5;
-  transition: opacity 0.3s;
-}
-
-/* Intense mode */
-.electric--intense .elec-line {
-  stroke-width: 3;
-  stroke-dasharray: 100 1000;
-}
-
-.electric--intense .elec-line.fire {
-  animation-duration: 0.6s;
-}
-
-/* Box glow при вспышке */
-.electric.elec-glow {
-  box-shadow:
-    0 0 8px rgba(139,92,246,0.15),
-    0 0 20px rgba(139,92,246,0.08),
-    inset 0 0 8px rgba(139,92,246,0.06);
-  transition: box-shadow 0.15s ease-out;
-}
-
-.electric:not(.elec-glow) {
-  transition: box-shadow 0.6s ease-out;
+  opacity: 0.85;
 }
 
 @media (prefers-reduced-motion: reduce) {

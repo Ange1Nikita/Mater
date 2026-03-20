@@ -9,6 +9,127 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Gallery card with caption below */
+    .gallery-card {
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      transition: transform 0.5s var(--ease-smooth), box-shadow 0.5s var(--ease-smooth);
+    }
+    .gallery-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl), var(--glow-blue);
+    }
+    .gallery-card__img {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/3;
+    }
+    .gallery-card__img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-smooth);
+    }
+    .gallery-card:hover .gallery-card__img img {
+      transform: scale(1.06);
+    }
+    .gallery-card__zoom {
+      position: absolute;
+      inset: 0;
+      background: rgba(26,24,20,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-card:hover .gallery-card__zoom { opacity: 1; }
+    .gallery-card__zoom span {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .gallery-card__info {
+      padding: 16px 18px;
+    }
+    .gallery-card__title {
+      font-family: var(--font-d);
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .gallery-card__desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .gallery-card__tag {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .gallery-card__tag--plumbing { background: var(--blue-soft); color: var(--blue); }
+    .gallery-card__tag--electric { background: var(--amber-soft); color: var(--amber); }
+    .gallery-card__tag--mounting { background: var(--violet-soft); color: var(--violet); }
+    .gallery-card__tag--repair { background: rgba(34,197,94,0.1); color: var(--green); }
+
+    /* Grid override for cards */
+    .gallery-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 1024px) {
+      .gallery-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .gallery-cards { grid-template-columns: 1fr; }
+      .gallery-card__info { padding: 12px 14px; }
+    }
+
+    /* Filter tabs */
+    .gallery-filters {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .gallery-filter {
+      padding: 9px 18px;
+      border-radius: 100px;
+      font-family: var(--font-b);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+    }
+    .gallery-filter:hover { color: var(--text); box-shadow: var(--shadow-sm); }
+    .gallery-filter.active {
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 16px rgba(75,124,243,0.3);
+    }
+  </style>
 </head>
 <body>
 
@@ -48,56 +169,16 @@
         <p class="section-desc">Реальные работы наших мастеров в Краснодаре</p>
       </div>
 
-      <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-grid__item"><img src="фото/Установка смесителя для ванной.jpg" alt="Установка смесителя для ванной" loading="lazy"><div class="portfolio__overlay"><span>Установка смесителя для ванной</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Устройство сантехнического шкафа, установка унитаза.jpg" alt="Устройство сантехнического шкафа" loading="lazy"><div class="portfolio__overlay"><span>Сантехнический шкаф, унитаз</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка стеклянной шторки.jpg" alt="Установка стеклянной шторки" loading="lazy"><div class="portfolio__overlay"><span>Установка стеклянной шторки</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка раковины и сифона, установка шкафчика с зеркалом.jpg" alt="Установка раковины и шкафчика" loading="lazy"><div class="portfolio__overlay"><span>Раковина, сифон, шкафчик</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка смесителя.jpg" alt="Установка смесителя" loading="lazy"><div class="portfolio__overlay"><span>Установка смесителя</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Тумба, раковина, смеситель.jpg" alt="Тумба, раковина, смеситель" loading="lazy"><div class="portfolio__overlay"><span>Тумба, раковина, смеситель</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Регулировка механизма слива.jpg" alt="Регулировка механизма слива" loading="lazy"><div class="portfolio__overlay"><span>Регулировка слива</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Ремонт инсталляции.jpg" alt="Ремонт инсталляции" loading="lazy"><div class="portfolio__overlay"><span>Ремонт инсталляции</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Замена сифона на труднодоступном месте.jpg" alt="Замена сифона" loading="lazy"><div class="portfolio__overlay"><span>Замена сифона</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Замена межкомнатного порожка.jpg" alt="Замена порожка" loading="lazy"><div class="portfolio__overlay"><span>Замена межкомнатного порожка</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка зеркала, раковины и тумбы в ванной комнате, подключение коммуникаций.jpg" alt="Установка зеркала и тумбы в ванной" loading="lazy"><div class="portfolio__overlay"><span>Зеркало, тумба, ванная</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка зеркального шкафа.jpg" alt="Установка зеркального шкафа" loading="lazy"><div class="portfolio__overlay"><span>Зеркальный шкаф</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка шкафа ванной комнаты.jpg" alt="Установка шкафа ванной" loading="lazy"><div class="portfolio__overlay"><span>Шкаф ванной комнаты</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Навес зеркал в ванной комнате.jpg" alt="Навес зеркал в ванной" loading="lazy"><div class="portfolio__overlay"><span>Навес зеркал</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Навес зеркала с подсветкой.jpg" alt="Зеркало с подсветкой" loading="lazy"><div class="portfolio__overlay"><span>Зеркало с подсветкой</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Сборка щитка.jpg" alt="Сборка электрощитка" loading="lazy"><div class="portfolio__overlay"><span>Сборка щитка</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Разводка электрики по полу на шумоизоляцию под стяжку.jpg" alt="Разводка электрики" loading="lazy"><div class="portfolio__overlay"><span>Разводка электрики</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Монтаж двух светильников на гипсокартон.jpg" alt="Монтаж светильников" loading="lazy"><div class="portfolio__overlay"><span>Монтаж светильников</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Монтаж люстры.jpg" alt="Монтаж люстры" loading="lazy"><div class="portfolio__overlay"><span>Монтаж люстры</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Освещение.jpg" alt="Освещение" loading="lazy"><div class="portfolio__overlay"><span>Освещение</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Подсветка кухни.jpg" alt="Подсветка кухни" loading="lazy"><div class="portfolio__overlay"><span>Подсветка кухни</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Перенос выключателя света.jpg" alt="Перенос выключателя" loading="lazy"><div class="portfolio__overlay"><span>Перенос выключателя</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Прокладка кабеля и установка электроточек.jpg" alt="Прокладка кабеля" loading="lazy"><div class="portfolio__overlay"><span>Прокладка кабеля</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Работа со стеновыми панелями и освещением.jpg" alt="Стеновые панели и освещение" loading="lazy"><div class="portfolio__overlay"><span>Панели и освещение</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Монтаж розеток и ТВ-крепежа.jpg" alt="Монтаж розеток и ТВ-крепежа" loading="lazy"><div class="portfolio__overlay"><span>Розетки и ТВ-крепёж</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка розеток, освещения, сборка щитка.jpg" alt="Розетки, освещение, щиток" loading="lazy"><div class="portfolio__overlay"><span>Розетки, освещение, щиток</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Электрика под новую кухню.jpg" alt="Электрика под кухню" loading="lazy"><div class="portfolio__overlay"><span>Электрика под кухню</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Электропроводка в кабель-каналах, установка люстр, бра.jpg" alt="Электропроводка" loading="lazy"><div class="portfolio__overlay"><span>Электропроводка, люстры, бра</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Базовый монтаж.jpg" alt="Базовый монтаж" loading="lazy"><div class="portfolio__overlay"><span>Базовый монтаж</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Монтаж телевизора.jpg" alt="Монтаж телевизора" loading="lazy"><div class="portfolio__overlay"><span>Монтаж телевизора</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/43 диагональ на фиксированый прямой кронштейн на гипсокартоновую стену.jpg" alt="ТВ 43 на гипсокартон" loading="lazy"><div class="portfolio__overlay"><span>ТВ 43" на гипсокартон</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/75 диагональ на высоту более 2 метров на поворотный кронштейн.jpg" alt="ТВ 75 поворотный кронштейн" loading="lazy"><div class="portfolio__overlay"><span>ТВ 75" поворотный кронштейн</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/75 диагональ на фиксированый кронштейн стена 10 см.jpg" alt="ТВ 75 фиксированный кронштейн" loading="lazy"><div class="portfolio__overlay"><span>ТВ 75" фиксированный</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/85 диагональ на пазогребннвую стену.jpg" alt="ТВ 85 на стену" loading="lazy"><div class="portfolio__overlay"><span>ТВ 85" на стену</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/8к самсунг 75 диагональ на гипсокартоновую стену.jpg" alt="Samsung 8K 75 на гипсокартон" loading="lazy"><div class="portfolio__overlay"><span>Samsung 8K 75"</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Навеска картин.jpg" alt="Навеска картин" loading="lazy"><div class="portfolio__overlay"><span>Навеска картин</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Навеска предметов интерьера.jpg" alt="Навеска предметов интерьера" loading="lazy"><div class="portfolio__overlay"><span>Предметы интерьера</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Большие картины.jpg" alt="Большие картины" loading="lazy"><div class="portfolio__overlay"><span>Большие картины</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Навес полок.jpg" alt="Навес полок" loading="lazy"><div class="portfolio__overlay"><span>Навес полок</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Навесы в детской.jpg" alt="Навесы в детской" loading="lazy"><div class="portfolio__overlay"><span>Навесы в детской</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка полки.jpg" alt="Установка полки" loading="lazy"><div class="portfolio__overlay"><span>Установка полки</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка карниза.jpg" alt="Установка карниза" loading="lazy"><div class="portfolio__overlay"><span>Установка карниза</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Установка турника.jpg" alt="Установка турника" loading="lazy"><div class="portfolio__overlay"><span>Установка турника</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Галошница.jpg" alt="Галошница" loading="lazy"><div class="portfolio__overlay"><span>Галошница</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Монтаж гардеробной системы.jpg" alt="Монтаж гардеробной системы" loading="lazy"><div class="portfolio__overlay"><span>Гардеробная система</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/Замена центральной балки, усиление дополнительными ножками.jpg" alt="Замена центральной балки" loading="lazy"><div class="portfolio__overlay"><span>Замена балки, усиление</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/стеллаж сборка.jpg" alt="Сборка стеллажа" loading="lazy"><div class="portfolio__overlay"><span>Сборка стеллажа</span></div></div>
-        <div class="gallery-grid__item"><img src="фото/b72c32c344924bde93cc0ae11a938f0a.jpg-profi_w1500.jpg" alt="Работа мастера" loading="lazy"><div class="portfolio__overlay"><span>Работа мастера</span></div></div>
+      <!-- Filters -->
+      <div class="gallery-filters">
+        <button class="gallery-filter active" data-filter="all">Все работы</button>
+        <button class="gallery-filter" data-filter="plumbing">🔧 Сантехника</button>
+        <button class="gallery-filter" data-filter="electric">💡 Электрика</button>
+        <button class="gallery-filter" data-filter="mounting">🖼️ Навеска и монтаж</button>
+        <button class="gallery-filter" data-filter="repair">🏠 Ремонт</button>
       </div>
+
+      <div class="gallery-cards" id="galleryCards"></div>
 
       <div style="text-align:center;padding:60px 0 20px">
         <h2 class="section-title" style="font-size:clamp(24px,3vw,36px)">Нужен мастер?</h2>
@@ -126,7 +207,6 @@
     </div>
   </footer>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox__close" aria-label="Закрыть">✕</button>
     <button class="lightbox__nav lightbox__nav--prev" aria-label="Назад">‹</button>
@@ -142,11 +222,124 @@
       <a href="index.html#services" class="mobile-menu__link">Услуги</a>
       <a href="index.html#portfolio" class="mobile-menu__link">Портфолио</a>
       <a href="prices.html" class="mobile-menu__link">Цены</a>
+      <a href="gallery.html" class="mobile-menu__link">Галерея</a>
       <a href="index.html#cta" class="btn-main" style="margin-top:20px">Вызвать мастера →</a>
     </div>
   </div>
 
   <script>
+  var GALLERY = [
+    { file:'Установка смесителя для ванной.jpg', title:'Установка смесителя для ванной', desc:'Монтаж нового смесителя с подключением горячей и холодной воды, проверка герметичности', cat:'plumbing' },
+    { file:'Устройство сантехнического шкафа, установка унитаза.jpg', title:'Сантехнический шкаф и унитаз', desc:'Устройство сантехнического шкафа с разводкой труб, установка и подключение унитаза', cat:'plumbing' },
+    { file:'Установка стеклянной шторки.jpg', title:'Установка стеклянной шторки', desc:'Монтаж стеклянной шторки на ванну с креплением к стене и герметизацией стыков', cat:'plumbing' },
+    { file:'Установка раковины и сифона, установка шкафчика с зеркалом.jpg', title:'Раковина, сифон и шкафчик', desc:'Комплексная установка раковины с сифоном и навесного шкафчика с зеркалом', cat:'plumbing' },
+    { file:'Установка смесителя.jpg', title:'Установка смесителя', desc:'Замена старого смесителя на новый с подключением гибких подводок', cat:'plumbing' },
+    { file:'Тумба, раковина, смеситель.jpg', title:'Тумба, раковина, смеситель', desc:'Сборка тумбы, установка накладной раковины и подключение смесителя', cat:'plumbing' },
+    { file:'Регулировка механизма слива.jpg', title:'Регулировка механизма слива', desc:'Настройка сливной арматуры унитаза, устранение постоянного протекания воды', cat:'plumbing' },
+    { file:'Ремонт инсталляции.jpg', title:'Ремонт инсталляции', desc:'Диагностика и ремонт скрытой инсталляции подвесного унитаза без демонтажа плитки', cat:'plumbing' },
+    { file:'Замена сифона на труднодоступном месте.jpg', title:'Замена сифона', desc:'Замена сифона в труднодоступном месте с подгонкой соединений под нестандартную разводку', cat:'plumbing' },
+    { file:'Замена межкомнатного порожка.jpg', title:'Замена межкомнатного порожка', desc:'Демонтаж старого порожка и установка нового с подрезкой под размер проёма', cat:'repair' },
+    { file:'Установка зеркала, раковины и тумбы в ванной комнате, подключение коммуникаций.jpg', title:'Зеркало, тумба, раковина — ванная', desc:'Полный монтаж мебели для ванной: тумба, раковина, зеркало с подключением воды и канализации', cat:'plumbing' },
+    { file:'Установка зеркального шкафа.jpg', title:'Установка зеркального шкафа', desc:'Навес зеркального шкафчика на стену ванной комнаты с выравниванием и надёжным крепежом', cat:'mounting' },
+    { file:'Установка шкафа ванной комнаты.jpg', title:'Шкаф ванной комнаты', desc:'Монтаж подвесного шкафа в ванной с учётом расположения труб и электрики', cat:'mounting' },
+    { file:'Навес зеркал в ванной комнате.jpg', title:'Навес зеркал в ванной', desc:'Установка двух зеркал на плитку с использованием специального крепежа без сверления', cat:'mounting' },
+    { file:'Навес зеркала с подсветкой.jpg', title:'Зеркало с подсветкой', desc:'Навес зеркала со встроенной LED-подсветкой, подключение к электросети', cat:'mounting' },
+    { file:'Сборка щитка.jpg', title:'Сборка электрощитка', desc:'Полная сборка электрического щитка: автоматы, УЗО, дифавтоматы, маркировка линий', cat:'electric' },
+    { file:'Разводка электрики по полу на шумоизоляцию под стяжку.jpg', title:'Разводка электрики по полу', desc:'Прокладка кабелей по полу на шумоизоляцию перед заливкой стяжки, разметка трасс', cat:'electric' },
+    { file:'Монтаж двух светильников на гипсокартон.jpg', title:'Монтаж светильников на гипсокартон', desc:'Установка двух точечных светильников в потолок из гипсокартона с подключением', cat:'electric' },
+    { file:'Монтаж люстры.jpg', title:'Монтаж люстры', desc:'Сборка и подвес люстры на потолочный крюк, подключение к выключателю', cat:'electric' },
+    { file:'Освещение.jpg', title:'Освещение', desc:'Комплексный монтаж осветительных приборов: потолочные, настенные, точечные', cat:'electric' },
+    { file:'Подсветка кухни.jpg', title:'Подсветка кухни', desc:'Установка светодиодной ленты под верхними шкафами кухни с выключателем', cat:'electric' },
+    { file:'Перенос выключателя света.jpg', title:'Перенос выключателя', desc:'Перенос выключателя на новое место: штробление, прокладка кабеля, установка подрозетника', cat:'electric' },
+    { file:'Прокладка кабеля и установка электроточек.jpg', title:'Прокладка кабеля и электроточки', desc:'Прокладка силового кабеля в гофре и монтаж розеток и выключателей', cat:'electric' },
+    { file:'Работа со стеновыми панелями и освещением.jpg', title:'Стеновые панели и освещение', desc:'Монтаж декоративных стеновых панелей с интеграцией скрытой подсветки', cat:'electric' },
+    { file:'Монтаж розеток и ТВ-крепежа.jpg', title:'Розетки и ТВ-крепёж', desc:'Установка блока розеток и скрытого крепления для телевизора за стеновой панелью', cat:'electric' },
+    { file:'Установка розеток, освещения, сборка щитка.jpg', title:'Розетки, освещение, щиток', desc:'Комплексная электрика: установка розеток, светильников и сборка распределительного щитка', cat:'electric' },
+    { file:'Электрика под новую кухню.jpg', title:'Электрика под новую кухню', desc:'Разводка электрики под кухонный гарнитур: розетки для техники, подсветка, вытяжка', cat:'electric' },
+    { file:'Электропроводка в кабель-каналах, установка люстр, бра.jpg', title:'Электропроводка, люстры, бра', desc:'Открытая проводка в кабель-каналах, установка и подключение люстр и настенных бра', cat:'electric' },
+    { file:'Базовый монтаж.jpg', title:'Базовый монтаж телевизора', desc:'Установка телевизора на стену на фиксированный кронштейн, прокладка кабелей', cat:'mounting' },
+    { file:'Монтаж телевизора.jpg', title:'Монтаж телевизора', desc:'Навеска ТВ на кронштейн с выравниванием по уровню и скрытой прокладкой проводов', cat:'mounting' },
+    { file:'43 диагональ на фиксированый прямой кронштейн на гипсокартоновую стену.jpg', title:'ТВ 43" на гипсокартон', desc:'Установка телевизора 43 дюйма на фиксированный кронштейн. Стена — гипсокартон, усиление закладными', cat:'mounting' },
+    { file:'75 диагональ на высоту более 2 метров на поворотный кронштейн.jpg', title:'ТВ 75" на поворотном кронштейне', desc:'Монтаж телевизора 75 дюймов на высоте более 2 метров на поворотный кронштейн', cat:'mounting' },
+    { file:'75 диагональ на фиксированый кронштейн стена 10 см.jpg', title:'ТВ 75" — тонкая стена 10 см', desc:'Установка 75-дюймового ТВ на фиксированный кронштейн при толщине стены всего 10 см', cat:'mounting' },
+    { file:'85 диагональ на пазогребннвую стену.jpg', title:'ТВ 85" на пазогребневую стену', desc:'Монтаж телевизора 85 дюймов на пазогребневую стену с использованием специального крепежа', cat:'mounting' },
+    { file:'8к самсунг 75 диагональ на гипсокартоновую стену.jpg', title:'Samsung 8K 75" на гипсокартон', desc:'Установка премиального Samsung 8K 75 дюймов на гипсокартонную стену с усилением', cat:'mounting' },
+    { file:'Навеска картин.jpg', title:'Навеска картин', desc:'Развеска коллекции картин с точной разметкой, выравниванием и подбором крепежа', cat:'mounting' },
+    { file:'Навеска предметов интерьера.jpg', title:'Навеска предметов интерьера', desc:'Монтаж декоративных предметов на стену: часы, панно, рамки — аккуратно и ровно', cat:'mounting' },
+    { file:'Большие картины.jpg', title:'Большие картины', desc:'Навеска крупноформатных картин с усиленным крепежом и распределением нагрузки', cat:'mounting' },
+    { file:'Навес полок.jpg', title:'Навес полок', desc:'Установка настенных полок с выравниванием по уровню и надёжной фиксацией', cat:'mounting' },
+    { file:'Навесы в детской.jpg', title:'Навесы в детской', desc:'Монтаж полок, светильников и декоративных элементов в детской комнате', cat:'mounting' },
+    { file:'Установка полки.jpg', title:'Установка полки', desc:'Навеска декоративной полки на стену с точной разметкой и скрытым крепежом', cat:'mounting' },
+    { file:'Установка карниза.jpg', title:'Установка карниза', desc:'Монтаж потолочного карниза для штор с выравниванием и надёжной фиксацией', cat:'mounting' },
+    { file:'Установка турника.jpg', title:'Установка турника', desc:'Монтаж спортивного турника на стену с усиленным крепежом, проверка на нагрузку', cat:'mounting' },
+    { file:'Галошница.jpg', title:'Галошница', desc:'Сборка и установка галошницы в прихожей, регулировка полок и механизмов', cat:'repair' },
+    { file:'Монтаж гардеробной системы.jpg', title:'Гардеробная система', desc:'Полный монтаж гардеробной системы: направляющие, полки, штанги, корзины', cat:'repair' },
+    { file:'Замена центральной балки, усиление дополнительными ножками.jpg', title:'Замена балки, усиление кровати', desc:'Замена центральной балки кровати и установка дополнительных ножек для усиления', cat:'repair' },
+    { file:'стеллаж сборка.jpg', title:'Сборка стеллажа', desc:'Сборка стеллажа из комплекта с проверкой уровня и надёжности всех соединений', cat:'repair' },
+    { file:'b72c32c344924bde93cc0ae11a938f0a.jpg-profi_w1500.jpg', title:'Работа мастера', desc:'Профессиональный подход к каждому заказу — аккуратно, быстро, с гарантией', cat:'repair' },
+  ];
+
+  var catNames = { plumbing:'Сантехника', electric:'Электрика', mounting:'Навеска и монтаж', repair:'Ремонт' };
+
+  function renderGallery(filter) {
+    var html = '';
+    for (var i = 0; i < GALLERY.length; i++) {
+      var g = GALLERY[i];
+      if (filter !== 'all' && g.cat !== filter) continue;
+      html += '<div class="gallery-card" data-cat="'+g.cat+'">' +
+        '<div class="gallery-card__img" data-idx="'+i+'">' +
+        '<img src="фото/'+g.file+'" alt="'+g.title+'" loading="lazy">' +
+        '<div class="gallery-card__zoom"><span>🔍</span></div></div>' +
+        '<div class="gallery-card__info"><div class="gallery-card__title">'+g.title+'</div>' +
+        '<div class="gallery-card__desc">'+g.desc+'</div>' +
+        '<span class="gallery-card__tag gallery-card__tag--'+g.cat+'">'+catNames[g.cat]+'</span></div></div>';
+    }
+    document.getElementById('galleryCards').innerHTML = html;
+  }
+
+  // Filters
+  document.querySelector('.gallery-filters').addEventListener('click', function(e) {
+    var btn = e.target.closest('.gallery-filter');
+    if (!btn) return;
+    document.querySelectorAll('.gallery-filter').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderGallery(btn.getAttribute('data-filter'));
+  });
+
+  renderGallery('all');
+
+  // Lightbox
+  (function(){
+    var lb=document.getElementById('lightbox');if(!lb)return;
+    var img=document.getElementById('lightboxImg'),cap=document.getElementById('lightboxCaption');
+    var filtered=[],idx=0;
+
+    function getFiltered(){
+      filtered=[];
+      document.querySelectorAll('.gallery-card__img').forEach(function(el){
+        var im=el.querySelector('img');
+        if(im)filtered.push({src:im.src,alt:im.alt});
+      });
+    }
+
+    function open(i){getFiltered();if(i<0||i>=filtered.length)return;idx=i;img.src=filtered[i].src;img.alt=filtered[i].alt;cap.textContent=filtered[i].alt;lb.classList.add('open');document.body.classList.add('modal-open');document.documentElement.classList.add('modal-open')}
+    function close(){lb.classList.remove('open');document.body.classList.remove('modal-open');document.documentElement.classList.remove('modal-open')}
+    function nav(d){var n=idx+d;if(n<0)n=filtered.length-1;if(n>=filtered.length)n=0;idx=n;img.src=filtered[n].src;img.alt=filtered[n].alt;cap.textContent=filtered[n].alt}
+
+    document.addEventListener('click',function(e){
+      var card=e.target.closest('.gallery-card__img');
+      if(!card)return;
+      getFiltered();
+      var im=card.querySelector('img');
+      for(var i=0;i<filtered.length;i++){if(filtered[i].src===im.src){open(i);break}}
+    });
+    lb.querySelector('.lightbox__close').addEventListener('click',close);
+    lb.addEventListener('click',function(e){if(e.target===lb)close()});
+    lb.querySelector('.lightbox__nav--prev').addEventListener('click',function(e){e.stopPropagation();nav(-1)});
+    lb.querySelector('.lightbox__nav--next').addEventListener('click',function(e){e.stopPropagation();nav(1)});
+    document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')nav(-1);if(e.key==='ArrowRight')nav(1)});
+  })();
+
   // Burger
   var burger=document.querySelector('.burger'),menu=document.getElementById('mobileMenu');
   function closeMenu(){burger.classList.remove('open');menu.classList.remove('open');document.body.style.overflow=''}
@@ -155,22 +348,6 @@
     var cb=menu.querySelector('.mobile-menu__close');if(cb)cb.addEventListener('click',closeMenu);
     menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMenu)});
   }
-
-  // Lightbox
-  (function(){
-    var lb=document.getElementById('lightbox');if(!lb)return;
-    var img=document.getElementById('lightboxImg'),cap=document.getElementById('lightboxCaption'),items=[],idx=0;
-    function collect(){items=[];document.querySelectorAll('.gallery-grid__item img').forEach(function(e){items.push({src:e.src,alt:e.alt})})}
-    function open(i){collect();if(i<0||i>=items.length)return;idx=i;img.src=items[i].src;img.alt=items[i].alt;cap.textContent=items[i].alt;lb.classList.add('open');document.body.classList.add('modal-open');document.documentElement.classList.add('modal-open')}
-    function close(){lb.classList.remove('open');document.body.classList.remove('modal-open');document.documentElement.classList.remove('modal-open')}
-    function nav(d){var n=idx+d;if(n<0)n=items.length-1;if(n>=items.length)n=0;idx=n;img.src=items[n].src;img.alt=items[n].alt;cap.textContent=items[n].alt}
-    document.addEventListener('click',function(e){var it=e.target.closest('.gallery-grid__item');if(!it)return;var im=it.querySelector('img');if(!im)return;collect();for(var i=0;i<items.length;i++){if(items[i].src===im.src){open(i);break}}});
-    lb.querySelector('.lightbox__close').addEventListener('click',close);
-    lb.addEventListener('click',function(e){if(e.target===lb)close()});
-    lb.querySelector('.lightbox__nav--prev').addEventListener('click',function(e){e.stopPropagation();nav(-1)});
-    lb.querySelector('.lightbox__nav--next').addEventListener('click',function(e){e.stopPropagation();nav(1)});
-    document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')nav(-1);if(e.key==='ArrowRight')nav(1)});
-  })();
   </script>
 
   <script>

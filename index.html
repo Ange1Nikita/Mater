@@ -6,6 +6,7 @@
   <title>МастерПро — Мастер на час в Краснодаре</title>
   <meta name="description" content="Мастер на час в Краснодаре — электрика, сантехника, навеска, мелкий ремонт. Выезд за 60 минут, фиксированные цены, гарантия 1 год. Звоните: +7 (918) 975-16-42" />
   <meta name="theme-color" content="#f7f6f3" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="canonical" href="https://masterpro.ru/" />
 
   <!-- OG -->
@@ -589,6 +590,77 @@
     }, { rootMargin: '200px' });
 
     observer.observe(mapEl);
+  })();
+  </script>
+  <!-- Popup форма заявки (через 30 сек, один раз) -->
+  <div class="popup-form" id="popupForm">
+    <div class="popup-form__backdrop"></div>
+    <div class="popup-form__content">
+      <button class="popup-form__close" aria-label="Закрыть">✕</button>
+      <div class="popup-form__icon">⚡</div>
+      <h3 class="popup-form__title">Нужен мастер?</h3>
+      <p class="popup-form__desc">Оставьте заявку — перезвоним за 15 минут и назовём точную стоимость</p>
+      <form class="form" id="popupOrderForm">
+        <div class="form__group"><input type="text" name="name" class="form__input" placeholder="Ваше имя" required autocomplete="name"></div>
+        <div class="form__group"><input type="tel" name="phone" class="form__input" placeholder="Телефон" required autocomplete="tel"></div>
+        <button type="submit" class="btn-main btn-main--full">Оставить заявку <span class="btn-main__arrow">→</span></button>
+      </form>
+      <button class="popup-form__skip" id="popupSkip">Не сейчас</button>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    // Показываем один раз — проверяем localStorage
+    if (localStorage.getItem('masterpro_popup_shown')) return;
+
+    var popup = document.getElementById('popupForm');
+    if (!popup) return;
+
+    function openPopup() {
+      popup.classList.add('open');
+      document.body.classList.add('modal-open');
+      document.documentElement.classList.add('modal-open');
+    }
+
+    function closePopup() {
+      popup.classList.remove('open');
+      document.body.classList.remove('modal-open');
+      document.documentElement.classList.remove('modal-open');
+      localStorage.setItem('masterpro_popup_shown', '1');
+    }
+
+    // Через 30 секунд
+    setTimeout(openPopup, 30000);
+
+    // Закрытие
+    popup.querySelector('.popup-form__backdrop').addEventListener('click', closePopup);
+    popup.querySelector('.popup-form__close').addEventListener('click', closePopup);
+    document.getElementById('popupSkip').addEventListener('click', closePopup);
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && popup.classList.contains('open')) closePopup();
+    });
+
+    // Отправка
+    document.getElementById('popupOrderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var data = Object.fromEntries(new FormData(this));
+      fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }).catch(function(){});
+
+      // Показываем успех
+      popup.querySelector('.popup-form__content').innerHTML =
+        '<div style="text-align:center;padding:20px 0">' +
+        '<div style="font-size:48px;margin-bottom:16px">✅</div>' +
+        '<h3 class="popup-form__title">Спасибо!</h3>' +
+        '<p class="popup-form__desc">Мы перезвоним вам в ближайшее время</p></div>';
+
+      localStorage.setItem('masterpro_popup_shown', '1');
+      setTimeout(closePopup, 3000);
+    });
   })();
   </script>
 </body>

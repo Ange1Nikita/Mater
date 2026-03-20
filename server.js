@@ -80,7 +80,7 @@ app.post('/api/order', async (req, res) => {
 
   const { name, phone, service, comment } = req.body;
 
-  if (!name || !phone || !service) {
+  if (!name || !phone) {
     return res.status(400).json({ error: 'Заполните обязательные поля' });
   }
 
@@ -90,13 +90,13 @@ app.post('/api/order', async (req, res) => {
   const safePhone = clean(phone);
   const safeComment = comment ? clean(comment) : '';
 
-  const serviceName = serviceNames[service] || clean(service);
+  const serviceName = service ? (serviceNames[service] || clean(service)) : '';
 
   const message =
     `🔔 *Новая заявка с сайта*\n\n` +
     `👤 *Имя:* ${safeName}\n` +
     `📞 *Телефон:* ${safePhone}\n` +
-    `🔧 *Услуга:* ${serviceName}\n` +
+    (serviceName ? `🔧 *Услуга:* ${serviceName}\n` : '') +
     (safeComment ? `💬 *Комментарий:* ${safeComment}\n` : '') +
     `\n🕐 ${new Date().toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' })}`;
 

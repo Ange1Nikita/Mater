@@ -402,58 +402,184 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 });
 
-/* ========== LIGHTNING — искра-змейка по контуру блоков ========== */
+/* ========== ELECTRIC EDGE — импульс по контуру блоков ========== */
 (function() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var configs = [
-    { sel: '.service-card',  speed: 2.5, base: 0,   step: 1.5 },
-    { sel: '.step',          speed: 3,   base: 0.8, step: 2 },
-    { sel: '.review-card',   speed: 2.8, base: 0,   step: 3 },
-    { sel: '.showcase-row',  speed: 3.5, base: 1,   step: 1.5 },
-    { sel: '.advantage',     speed: 2.8, base: 0.5, step: 1.8 },
-    { sel: '.faq-item',      speed: 3,   base: 1.5, step: 2.2 },
-    { sel: '.glass-card',    speed: 2,   base: 0.5, step: 1.5 },
-    { sel: '.trust-strip',   speed: 3,   base: 2,   step: 0 },
-    { sel: '.cta__inner',    speed: 3.5, base: 0,   step: 0 },
-    { sel: '.map-card',      speed: 4,   base: 3,   step: 0 },
+  // Общие SVG defs (градиент + glow фильтр) — один на страницу
+  var defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  defs.setAttribute('width', '0');
+  defs.setAttribute('height', '0');
+  defs.style.position = 'absolute';
+  defs.innerHTML =
+    '<defs>' +
+      '<linearGradient id="elecGrad" x1="0%" y1="0%" x2="100%" y2="0%">' +
+        '<stop offset="0%" stop-color="rgba(139,92,246,0)" />' +
+        '<stop offset="30%" stop-color="rgba(168,85,247,0.8)" />' +
+        '<stop offset="50%" stop-color="#fff" />' +
+        '<stop offset="70%" stop-color="rgba(168,85,247,0.8)" />' +
+        '<stop offset="100%" stop-color="rgba(139,92,246,0)" />' +
+      '</linearGradient>' +
+      '<filter id="elecGlow" x="-50%" y="-50%" width="200%" height="200%">' +
+        '<feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />' +
+        '<feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>' +
+      '</filter>' +
+    '</defs>';
+  document.body.appendChild(defs);
+
+  var selectors = [
+    '.service-card', '.step', '.review-card', '.showcase-row',
+    '.advantage', '.faq-item', '.glass-card', '.trust-strip',
+    '.cta__inner', '.map-card'
   ];
 
-  function addSpark(el, speed, delay) {
+  var allEls = [];
+
+  function setupEl(el) {
+    el.classList.add('electric');
     var pos = getComputedStyle(el).position;
     if (pos === 'static') el.style.position = 'relative';
-    el.style.overflow = el.style.overflow || 'hidden';
 
-    var classes = ['lt-spark', 'lt-trail', 'lt-trail2'];
-    for (var i = 0; i < classes.length; i++) {
-      var s = document.createElement('span');
-      s.className = classes[i];
-      s.style.setProperty('--lt-speed', speed + 's');
-      s.style.setProperty('--lt-delay', delay + 's');
-      el.appendChild(s);
-    }
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'elec-svg');
+    svg.setAttribute('preserveAspectRatio', 'none');
+
+    // Получаем border-radius
+    var r = parseFloat(getComputedStyle(el).borderRadius) || 0;
+    var w = el.offsetWidth;
+    var h = el.offsetHeight;
+
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+
+    // Путь по контуру с скруглениями
+    var path = buildRoundedPath(w, h, Math.min(r, w / 2, h / 2));
+
+    // Flash line (фоновая рамка)
+    var flash = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    flash.setAttribute('d', path);
+    flash.setAttribute('class', 'elec-flash');
+
+    // Main impulse line
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    line.setAttribute('d', path);
+    line.setAttribute('class', 'elec-line');
+
+    // Вычисляем длину пути
+    svg.appendChild(flash);
+    svg.appendChild(line);
+    el.appendChild(svg);
+
+    // После вставки — обновим dasharray по реальной длине
+    requestAnimationFrame(function() {
+      var len = line.getTotalLength();
+      var seg = len * 0.12; // длина искры = 12% периметра
+      line.style.strokeDasharray = seg + ' ' + (len + seg);
+      line.style.strokeDashoffset = len + seg;
+      line._len = len;
+      line._seg = seg;
+    });
+
+    return { el: el, svg: svg, line: line, flash: flash };
   }
 
+  function buildRoundedPath(w, h, r) {
+    // Строим path по контуру прямоугольника с закруглениями
+    return 'M ' + r + ' 0 ' +
+      'L ' + (w - r) + ' 0 ' +
+      'Q ' + w + ' 0 ' + w + ' ' + r + ' ' +
+      'L ' + w + ' ' + (h - r) + ' ' +
+      'Q ' + w + ' ' + h + ' ' + (w - r) + ' ' + h + ' ' +
+      'L ' + r + ' ' + h + ' ' +
+      'Q 0 ' + h + ' 0 ' + (h - r) + ' ' +
+      'L 0 ' + r + ' ' +
+      'Q 0 0 ' + r + ' 0 Z';
+  }
+
+  function fireImpulse(item) {
+    var line = item.line;
+    var flash = item.flash;
+    if (!line._len) return;
+
+    var len = line._len;
+    var seg = line._seg;
+
+    // Убираем старую анимацию
+    line.classList.remove('fire');
+    flash.classList.remove('fire');
+    item.el.classList.remove('elec-glow');
+
+    void line.offsetWidth; // force reflow
+
+    // Рандомное направление (50/50)
+    if (Math.random() > 0.5) {
+      line.style.strokeDashoffset = len + seg;
+      line.style.setProperty('--elec-end', (-seg) + '');
+    } else {
+      line.style.strokeDashoffset = -(seg);
+      line.style.setProperty('--elec-end', (len + seg) + '');
+    }
+
+    // Fire!
+    line.classList.add('fire');
+    flash.classList.add('fire');
+    item.el.classList.add('elec-glow');
+
+    // Убираем glow после анимации
+    setTimeout(function() {
+      item.el.classList.remove('elec-glow');
+    }, 600);
+
+    // Cleanup
+    setTimeout(function() {
+      line.classList.remove('fire');
+      flash.classList.remove('fire');
+    }, 1000);
+  }
+
+  // IntersectionObserver — инициализируем при появлении
   var obs = new IntersectionObserver(function(entries) {
     for (var i = 0; i < entries.length; i++) {
-      if (entries[i].isIntersecting && !entries[i].target._lt) {
-        entries[i].target._lt = true;
-        var el = entries[i].target;
-        addSpark(el, parseFloat(el.dataset.ltSpeed), parseFloat(el.dataset.ltDelay));
-        obs.unobserve(el);
+      if (entries[i].isIntersecting && !entries[i].target._elec) {
+        entries[i].target._elec = true;
+        var item = setupEl(entries[i].target);
+        allEls.push(item);
+        obs.unobserve(entries[i].target);
+
+        // Первый импульс через 1-3 секунды
+        setTimeout(function(it) {
+          return function() { fireImpulse(it); };
+        }(item), 1000 + Math.random() * 2000);
       }
     }
   }, { threshold: 0.05 });
 
-  for (var c = 0; c < configs.length; c++) {
-    var cfg = configs[c];
-    var els = document.querySelectorAll(cfg.sel);
-    for (var i = 0; i < els.length; i++) {
-      els[i].dataset.ltSpeed = cfg.speed;
-      els[i].dataset.ltDelay = cfg.base + cfg.step * i;
-      obs.observe(els[i]);
-    }
+  // Собираем все элементы
+  for (var s = 0; s < selectors.length; s++) {
+    var els = document.querySelectorAll(selectors[s]);
+    for (var i = 0; i < els.length; i++) obs.observe(els[i]);
   }
+
+  // Рандомные вспышки — каждые 2-5 секунд один случайный элемент
+  setInterval(function() {
+    if (!allEls.length) return;
+    var idx = Math.floor(Math.random() * allEls.length);
+    fireImpulse(allEls[idx]);
+
+    // Иногда двойная вспышка (20% шанс)
+    if (Math.random() < 0.2 && allEls.length > 1) {
+      var idx2 = (idx + 1 + Math.floor(Math.random() * (allEls.length - 1))) % allEls.length;
+      setTimeout(function() { fireImpulse(allEls[idx2]); }, 100 + Math.random() * 200);
+    }
+  }, 2500 + Math.random() * 2500);
+
+  // Hover — усиленный импульс
+  document.addEventListener('mouseenter', function(e) {
+    var el = e.target.closest('.electric');
+    if (!el) return;
+    for (var i = 0; i < allEls.length; i++) {
+      if (allEls[i].el === el) { fireImpulse(allEls[i]); break; }
+    }
+  }, true);
 })();
 
 /* ========== TOAST ========== */
